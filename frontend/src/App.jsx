@@ -1,12 +1,38 @@
 import CourseCard from "./Components/CourseCard";
 import "./App.css";
-
+const courses = [
+  {
+    Title: "Web Development",
+    Description: "Learn HTML, CSS, and JavaScript",
+    Duration: "12 weeks",
+    Rating: "4.5"
+  },
+  {
+    Title: "Mobile App Development",
+    Description: "Build native mobile apps with React Native",
+    Duration: "16 weeks",
+    Rating: "4.7"
+  },
+  {
+    Title: "Data Science",
+    Description: "Learn Python and machine learning",
+    Duration: "20 weeks",
+    Rating: "4.8"
+  }
+];
 function App() {
+  console.log(courses);
   return (
     <div>
       <h1>Study Assistant</h1>
-      <CourseCard Title="Web Development" Description="Learn HTML, CSS, and JavaScript" Duration="12 weeks" Rating="4.5" />
-      <CourseCard Title="Mobile App Development" Description="Build native mobile apps with React Native" Duration="16 weeks" Rating="4.7" />
+      {courses.map((course) => (
+        <CourseCard
+          Title={course.Title}
+          Description={course.Description}
+          Duration={course.Duration}
+          Rating={course.Rating}
+        />
+      ))}
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import CourseCard from "./components/CourseCard";
 import Header from "./components/Header";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import "./App.css";
 const courses = [
   {
@@ -36,6 +37,7 @@ function App() {
           Rating={course.Rating}
         />
       ))}
+      <Footer/>
     </div>
   );
 }

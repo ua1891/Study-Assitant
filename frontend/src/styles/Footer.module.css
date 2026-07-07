@@ -1,0 +1,23 @@
+.footer {
+  text-align: center;
+  padding: 28px 20px;
+  background: linear-gradient(135deg, #0f0c29, #24243e);
+  color: rgba(255, 255, 255, 0.75);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: 0.3px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+}
+
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #7f5af0, #2cb67d);
+  border-radius: 2px;
+}

@@ -1,4 +1,5 @@
-import CourseCard from "./Components/CourseCard";
+import CourseCard from "./components/CourseCard";
+import Header from "./components/Header";
 import "./App.css";
 const courses = [
   {
@@ -24,7 +25,7 @@ function App() {
   console.log(courses);
   return (
     <div>
-      <h1>Study Assistant</h1>
+      <Header />
       {courses.map((course) => (
         <CourseCard
           Title={course.Title}

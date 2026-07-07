@@ -1,14 +1,23 @@
+import styles from "../styles/CourseCard.module.css";
 
-function CourseCard({Title,Description,Duration,Rating}){
-        return (
-            <div>
-                <h1>{Title}</h1>
-                <p>{Description}</p>
-                <p>Duration: {Duration}</p>
-                <p>Rating: {Rating}</p>
-            </div>
-        );
-    }
-    export default CourseCard;
+function CourseCard({ title, description, duration, rating }) {
+  return (
+       console.log(title),
+    <div className={styles.card}>
+      <h1 className={styles.title}>{title}</h1>
 
+      <p className={styles.description}>{description}</p>
+      <div className={styles.meta}>
+        <span className={styles.duration}>
+          Duration: {duration}
+        </span>
 
+        <span className={styles.rating}>
+          Rating: {rating}
+        </span>
+      </div>
+    </div>
+  );
+}
+
+export default CourseCard;

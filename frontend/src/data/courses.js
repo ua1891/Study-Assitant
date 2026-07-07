@@ -1,0 +1,25 @@
+const courses = [
+  {
+    id: 1,
+    title: "Web Development",
+    description: "HTML CSS JavaScript",
+    duration: "12 Weeks",
+    rating: "⭐⭐⭐⭐⭐",
+  },
+  {
+    id: 2,
+    title: "React",
+    description: "Frontend Library",
+    duration: "8 Weeks",
+    rating: "⭐⭐⭐⭐",
+  },
+  {
+    id: 3,
+    title: "Python",
+    description: "Programming Language",
+    duration: "10 Weeks",
+    rating: "⭐⭐⭐⭐⭐",
+  },
+];
+
+export default courses;

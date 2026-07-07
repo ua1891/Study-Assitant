@@ -1,5 +1,6 @@
 import CourseCard from "./components/CourseCard";
 import Header from "./components/Header";
+import Navbar from "./components/Navbar";
 import "./App.css";
 const courses = [
   {
@@ -25,6 +26,7 @@ function App() {
   console.log(courses);
   return (
     <div>
+      <Navbar />
       <Header />
       {courses.map((course) => (
         <CourseCard

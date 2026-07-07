@@ -1,22 +1,93 @@
 .header {
-    background: linear-gradient(135deg, #1976d2 0%, #0d47a1 100%);
-    color: #ffffff;
-    text-align: center;  
-    padding: 40px 20px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  padding: 100px 20px 70px;
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  background-size: 200% 200%;
+  animation: gradientShift 10s ease infinite;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #fff;
 }
-.header h1 {
-    font-size: 2.2rem;
-    font-weight: 700;
-    letter-spacing: -0.5px;
-    margin: 0 0 8px 0;
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
-.header p {
-    font-size: 1rem;
-    color: rgba(255, 255, 255, 0.85);
-    margin: 0;
-    font-weight: 400;
+
+.header::before,
+.header::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.5;
+  z-index: 0;
+  animation: float 8s ease-in-out infinite;
+}
+
+.header::before {
+  width: 300px;
+  height: 300px;
+  background: #7f5af0;
+  top: -80px;
+  left: -60px;
+}
+
+.header::after {
+  width: 350px;
+  height: 350px;
+  background: #2cb67d;
+  bottom: -100px;
+  right: -80px;
+  animation-delay: 2s;
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(20px, -20px) scale(1.1); }
+}
+
+.h1 {
+  position: relative;
+  z-index: 1;
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  letter-spacing: -1px;
+  line-height: 1.3;              /* was too tight, causing the clipped/cut look */
+  padding: 0.1em 0;               /* gives ascenders/descenders breathing room */
+  margin: 0 0 12px;
+  display: inline-block;          /* helps background-clip render cleanly */
+  background: linear-gradient(90deg, #ffffff, #7f5af0, #2cb67d, #ffffff);
+  background-size: 300% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;  /* more reliable than color: transparent in some browsers */
+  color: transparent;
+  animation: shine 6s linear infinite;
+}
+
+@keyframes shine {
+  to { background-position: 300% center; }
+}
+
+@keyframes shine {
+  to { background-position: 300% center; }
+}
+
+.p {
+  position: relative;
+  z-index: 1;
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.75);
+  margin: 0;
+  font-weight: 400;
+  letter-spacing: 0.3px;
+}
+
+@media (max-width: 640px) {
+  .header {
+    padding: 80px 20px 50px;
+  }
 }

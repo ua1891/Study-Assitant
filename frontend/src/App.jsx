@@ -1,33 +1,40 @@
-import {useState} from "react";
+import { useState } from "react";
 
 import CourseCard from "./Components/CourseCard";
 import Header from "./Components/Header";
 import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
 import initialCourses from "./data/courses";
+import AddCourseForm from "./Components/AddCourseForm";
 import "./App.css";
 
 function App() {
   const [courses, setCourses] = useState(initialCourses);
+  const [showForm, setShowForm] = useState(false);
   function handleRemove(id) {
-  setCourses((prev) => prev.filter((course) => course.id !== id));
-}
-function handleAdd() {
-  const newCourse = {
-    id: Date.now(),
-    title: "New Course",
-    description: "Add a description",
-    duration: "TBD",
-    rating: "⭐",
-  };
-  setCourses((prev) => [...prev, newCourse]);
-}
+    setCourses((prev) => prev.filter((course) => course.id !== id));
+  }
+  {/*Add courses in Array*/}
+  function handleAdd(courseData) {
+    const newCourse = {
+      id: Date.now(),
+      ...courseData,
+    };
+    setCourses((prev) => [...prev, newCourse]);
+  }
   return (
     <div>
       <Navbar />
       <Header />
-      <button onClick={handleAdd}>+ Add Course</button>{/* Button to add a new course */}
-      <div className="courseCardgrid">
+      {!showForm && (
+        <button className="addCourseBtn" onClick={() => setShowForm(true)}>
+          + Add Course
+        </button>
+      )}
+{/* Buttonn for Adding new course */}
+      {showForm && (
+        <AddCourseForm onAdd={handleAdd} onClose={() => setShowForm(false)} />
+      )}      <div className="courseCardgrid">
         {courses.map((course) => (
           <CourseCard
             key={course.id}
@@ -44,5 +51,4 @@ function handleAdd() {
     </div>
   );
 }
-
 export default App;

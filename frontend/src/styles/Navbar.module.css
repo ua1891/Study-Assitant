@@ -3,29 +3,47 @@
   align-items: center;
   justify-content: space-between;
   padding: 1rem 2.5rem;
-  background: rgba(255, 0, 0, 0.3); /* TEMP - bright red, remove after confirming */
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(15, 12, 41, 0.65);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border-bottom: 1px solid transparent;
+  border-image: linear-gradient(90deg, #7f5af0, #2cb67d) 1;
   position: sticky;
   top: 0;
   z-index: 100;
 }
 
 .navbarLogo {
-  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.3rem;
   font-weight: 800;
   letter-spacing: -0.02em;
   color: #ffffff;
   cursor: pointer;
 }
 
+.navbarLogo::before {
+  content: '';
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  background: linear-gradient(135deg, #7f5af0, #2cb67d);
+  box-shadow: 0 0 14px rgba(127, 90, 240, 0.6);
+  display: inline-block;
+  transform: rotate(-8deg);
+}
+
 .navbarLinks {
   display: flex;
-  gap: 2rem;
+  gap: 0.4rem;
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 0.35rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 50px;
 }
 
 .navbarLinks li {
@@ -34,31 +52,19 @@
 
 .navbarLinks a {
   text-decoration: none;
-  color: rgba(255, 255, 255, 0.85);
-  font-size: 0.95rem;
-  font-weight: 500;
-  padding: 0.5rem 0;
-  transition: color 0.3s ease;
-}
-
-.navbarLinks a::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: linear-gradient(90deg, #7f5af0, #2cb67d);
-  transition: width 0.3s ease;
-  border-radius: 2px;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.92rem;
+  font-weight: 600;
+  padding: 0.55rem 1.2rem;
+  border-radius: 50px;
+  display: inline-block;
+  transition: color 0.3s ease, background 0.3s ease, transform 0.2s ease;
 }
 
 .navbarLinks a:hover {
   color: #ffffff;
-}
-
-.navbarLinks a:hover::after {
-  width: 100%;
+  background: linear-gradient(135deg, rgba(127, 90, 240, 0.35), rgba(44, 182, 125, 0.35));
+  transform: translateY(-1px);
 }
 
 @media (max-width: 640px) {
@@ -67,8 +73,7 @@
     flex-direction: column;
     gap: 0.75rem;
   }
-
   .navbarLinks {
-    gap: 1.25rem;
+    gap: 0.25rem;
   }
 }

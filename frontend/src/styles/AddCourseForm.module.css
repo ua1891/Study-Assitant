@@ -1,28 +1,3 @@
-.courseCardgrid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 16px; /* space between cards */
-  padding: 16px;
-}
-.addCourseBtn {
-  display: block;
-  margin: 20px auto;
-  background: linear-gradient(90deg, #0d523c, #7ea49d);
-  color: white;
-  border: none;
-  border-radius: 10px;
-  padding: 10px 20px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.addCourseBtn:hover {
-  opacity: 0.9;
-}
-
-
-
 .addCourseForm {
   display: flex;
   flex-direction: column;
@@ -38,7 +13,7 @@
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
 }
 
-.addCourseForm input {
+.input {
   padding: 10px 14px;
   border: 1px solid #d1d5db;
   border-radius: 8px;
@@ -47,12 +22,12 @@
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.addCourseForm input:focus {
+.input:focus {
   border-color: #0d523c;
   box-shadow: 0 0 0 3px rgba(13, 82, 60, 0.1);
 }
 
-.addCourseForm button {
+.submitBtn {
   align-self: flex-start;
   background: linear-gradient(90deg, #0d523c, #7ea49d);
   color: white;
@@ -64,6 +39,6 @@
   transition: opacity 0.2s ease;
 }
 
-.addCourseForm button:hover {
+.submitBtn:hover {
   opacity: 0.9;
 }

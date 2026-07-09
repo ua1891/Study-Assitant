@@ -7,6 +7,7 @@ function Popup({
   message,
   type = "info",
   onClose,
+  onConfirm,
 }) {
   if (!show) return null;
 
@@ -16,10 +17,14 @@ function Popup({
         <h2>{title}</h2>
 
         <p>{message}</p>
-
-        <button onClick={onClose}>
-          OK
-        </button>
+       {onConfirm ? (
+          <>
+            <button onClick={onConfirm}>Yes</button>
+            <button onClick={onClose}>Cancel</button>
+          </>
+        ) : (
+          <button onClick={onClose}>OK</button>
+        )}
       </div>
     </div>
   );

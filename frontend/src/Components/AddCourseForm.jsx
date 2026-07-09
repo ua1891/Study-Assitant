@@ -59,9 +59,19 @@ function AddCourseForm({ onAdd, onClose}) {
       onChange={handleChange}
       className={styles.input}
     />
-    <button type="submit" className={styles.submitBtn}>
-      Add Course
-    </button>
+  <div className={styles.buttonGroup}>
+  <button type="submit" className={styles.submitBtn}>
+    Add Course
+  </button>
+
+  <button
+    type="button"
+    className={styles.cancelBtn}
+    onClick={onClose}
+  >
+    Cancel
+  </button>
+</div>
   </form>
 );
 }

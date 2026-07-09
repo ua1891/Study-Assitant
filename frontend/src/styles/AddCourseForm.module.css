@@ -27,18 +27,42 @@
   box-shadow: 0 0 0 3px rgba(13, 82, 60, 0.1);
 }
 
-.submitBtn {
-  align-self: flex-start;
-  background: linear-gradient(90deg, #0d523c, #7ea49d);
-  color: white;
+/* Button Container */
+.buttonGroup {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+/* Common Button Styles */
+.submitBtn,
+.cancelBtn {
+  flex: 1;
+  padding: 12px;
   border: none;
   border-radius: 8px;
-  padding: 10px 20px;
+  font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   transition: opacity 0.2s ease;
 }
 
+/* Add Course Button */
+.submitBtn {
+  background: linear-gradient(90deg, #0d523c, #7ea49d);
+  color: white;
+}
+
 .submitBtn:hover {
+  opacity: 0.9;
+}
+
+/* Cancel Button */
+.cancelBtn {
+  background: #f44336;
+  color: white;
+}
+
+.cancelBtn:hover {
   opacity: 0.9;
 }

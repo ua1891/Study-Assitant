@@ -1,0 +1,107 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+
+  background: rgba(0,0,0,.45);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 999;
+}
+
+.popup {
+  width: 340px;
+
+  background: white;
+
+  border-radius: 12px;
+
+  padding: 25px;
+
+  text-align: center;
+
+  animation: popup .25s ease;
+}
+
+.popup h2{
+    margin-bottom:10px;
+}
+
+.popup p{
+    margin-bottom:20px;
+    color:#555;
+}
+
+.popup button{
+    padding:10px 25px;
+
+    border:none;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    color:white;
+
+    font-weight:bold;
+}
+
+/* Success */
+
+.success{
+    border-top:6px solid #28a745;
+}
+
+.success button{
+    background:#28a745;
+}
+
+/* Error */
+
+.error{
+    border-top:6px solid #dc3545;
+}
+
+.error button{
+    background:#dc3545;
+}
+
+/* Warning */
+
+.warning{
+    border-top:6px solid orange;
+}
+
+.warning button{
+    background:orange;
+}
+
+/* Info */
+
+.info{
+    border-top:6px solid #0d6efd;
+}
+
+.info button{
+    background:#0d6efd;
+}
+
+@keyframes popup{
+
+from{
+
+transform:scale(.8);
+opacity:0;
+
+}
+
+to{
+
+transform:scale(1);
+opacity:1;
+
+}
+
+}

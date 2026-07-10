@@ -1,15 +1,22 @@
 import { useState } from "react";
+import {useEffect} from "react";
 import CourseCard from "./Components/CourseCard";
 import Header from "./Components/Header";
 import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
-import initialCourses from "./data/courses";
 import AddCourseForm from "./Components/AddCourseForm";
 import Popup from "./Components/Popup";
 import "./App.css";
 
 function App() {
-  const [courses, setCourses] = useState(initialCourses);
+  const [courses, setCourses] = useState([]);
+ useEffect(() => {
+    fetch("/mock-courses.json")
+    .then((res)=> res.json())
+    .then((data) => setCourses(data))
+    .catch((error) => console.error("Error fetching courses:", error));
+ }, []);
+
   const [showForm, setShowForm] = useState(false);
   {/*Adding a delete popup and this is the useState for it*/ }
   const [showDeletePopup, setShowDeletePopup] = useState(false);

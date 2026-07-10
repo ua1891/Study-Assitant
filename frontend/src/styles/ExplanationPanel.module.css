@@ -1,0 +1,32 @@
+.panel {
+  margin: 10px 0;
+  text-align: left;
+}
+
+.toggleBtn {
+  background: #eef1f4;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 14px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
+  color: #333;
+  transition: background 0.2s;
+}
+
+.toggleBtn:hover {
+  background: #dfe4e8;
+}
+
+.explanationText {
+  margin-top: 10px;
+  padding: 10px 14px;
+  background: #f8faf9;
+  border-left: 3px solid #4b8b6f;
+  border-radius: 6px;
+  color: #555;
+  font-size: 14px;
+  font-style: italic;
+  line-height: 1.5;
+}

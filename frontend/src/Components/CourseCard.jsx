@@ -1,9 +1,9 @@
 import styles from "../styles/CourseCard.module.css";
+import ExplanationPanel from "./ExplanationPanel";  
 import { useState } from "react";
 
 
 function CourseCard({ id, title, description, duration, rating, onRemove }) {
-    const [expanded, setExpanded] = useState(false);
     const [interested, setInterested] = useState(0);
     return (
 
@@ -15,14 +15,11 @@ function CourseCard({ id, title, description, duration, rating, onRemove }) {
                 <span className={styles.rating}>Rating: {rating}</span>
             </div>
 
-            {expanded && <p className={styles.description}>{description}</p>}
 
+               <ExplanationPanel explanation={description} />{/*Conditionally render the description*/}
             <div className={styles.actions}>
                 <button className={styles.btnInterested} onClick={() => setInterested((prev) => prev + 1)}>
-                    👍 Interested ({interested})
-                </button>
-                <button className={styles.btnToggle} onClick={() => setExpanded((prev) => !prev)}>
-                    {expanded ? "Hide details" : "Show details"}
+                     Interested ({interested})
                 </button>
                 <button className={styles.btnRemove} onClick={() => onRemove(id)}>
                     Remove

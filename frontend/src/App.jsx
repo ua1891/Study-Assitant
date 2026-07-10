@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 import CourseCard from "./Components/CourseCard";
 import Header from "./Components/Header";
 import Navbar from "./Components/Navbar";

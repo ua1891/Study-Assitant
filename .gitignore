@@ -78,3 +78,7 @@ htmlcov/
 # Ollama (if you ever save models locally)
 # =========================
 ollama_models/
+
+__pycache__/
+venv/
+*.pyc

@@ -1,8 +1,12 @@
 from fastapi import FastAPI
-from utilies import greet
-app = FastAPI()
+from routers import Courses
+app = FastAPI(
+    title="Study Assistant API",
+    description="This is a Study Assistant API that provides information about courses and allows users to manage their courses.",
+    version="1.0.0"
+)
+app.include_router(Courses.router)
 
-
-@app.get("/{item_id}")
-def read_item(item_id: int):
-    return {"item_id": item_id, "message": greet("study-assistant")}
+@app.get("/")
+async def root():
+    return {"message": "Welcome to the Study Assistant API!"}

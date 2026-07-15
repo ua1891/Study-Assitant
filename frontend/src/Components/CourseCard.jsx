@@ -24,6 +24,9 @@ function CourseCard({ id, title, description, duration, rating, onRemove }) {
                 <button className={styles.btnRemove} onClick={() => onRemove(id)}>
                     Remove
                 </button>
+                <button>
+                    Edit
+                </button>
             </div>
         </div>
     );

@@ -7,8 +7,8 @@ import Popup from "../Components/Popup";
 function CoursesPage() {
   const [courses, setCourses] = useState([]);
  useEffect(() => {
-    fetch("/mock-courses.json")
-    .then((res)=> res.json())
+    fetch("http://127.0.0.1:8000/courses/")
+    .then((res)=> res.json()) 
     .then((data) => setCourses(data))
     .catch((error) => console.error("Error fetching courses:", error));
  }, []);
@@ -38,11 +38,21 @@ function CoursesPage() {
 
   {/*Add courses in Array*/ }
   function handleAdd(courseData) {
-    const newCourse = {
-      id: Date.now(),
-      ...courseData,
-    };
-    setCourses((prev) => [...prev, newCourse]);
+    fetch("http://127.0.0.1:8000/courses/addCourse", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(courseData),
+    })
+    .then((res) => res.json())
+    .then((data) => {
+      const newCourse = {
+        ...data,
+      };
+      setCourses((prev) => [...prev, newCourse]);
+    })
+    .catch((error) => console.error("Error adding course:", error));
   }
   return (
     <div>

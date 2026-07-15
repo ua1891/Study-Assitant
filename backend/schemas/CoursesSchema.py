@@ -1,8 +1,9 @@
+from typing import Optional
 from pydantic import BaseModel
 
 class Course(BaseModel):
-    id: int
-    name: str
+    id: Optional[int] = None
+    title: str
     description: str
     duration: str
     rating: str

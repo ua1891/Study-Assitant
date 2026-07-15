@@ -94,6 +94,8 @@ function AddCourseForm({ onAdd, onClose }) {
           >
             Cancel
           </button>
+        </div>
+      </form>
           <Popup
             show={popup.show}
             title={popup.title}
@@ -110,8 +112,6 @@ function AddCourseForm({ onAdd, onClose }) {
               }
             }}
           />
-        </div>
-      </form>
     </>
   );
 }

@@ -17,10 +17,13 @@ def get_course(course_id: int):
     raise HTTPException(status_code=404, detail="Course not found")
         
 
-@router.post("/addCourse", response_model=Course)   #Add a new course
+@router.post("/addCourse", response_model=Course)
 def add_course(course: Course):
-    courses_data.append(course.dict())
-    return course
+    new_course = course.dict()
+    if new_course["id"] is None:
+        new_course["id"] = max((c["id"] for c in courses_data), default=0) + 1
+    courses_data.append(new_course)
+    return new_course
 
 @router.put("/updateCourse/{course_id}", response_model=Course)  #Update a course by id
 def update_course(course_id: int, course: Course):  

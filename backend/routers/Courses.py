@@ -1,5 +1,5 @@
 from schemas.CoursesSchema import Course
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from data.courses import courses_data
 
 router = APIRouter(prefix="/courses", tags=["Courses"])
@@ -13,7 +13,9 @@ def get_course(course_id: int):
     for course in courses_data:
         if course["id"] == course_id:
             return course
-    return {"error": "Course not found"}    
+        
+    raise HTTPException(status_code=404, detail="Course not found")
+        
 
 @router.post("/addCourse", response_model=Course)   #Add a new course
 def add_course(course: Course):
@@ -26,7 +28,7 @@ def update_course(course_id: int, course: Course):
         if existing_course["id"] == course_id:
             existing_course.update(course.dict())
             return existing_course
-    return {"error": "Course not found"}
+    raise HTTPException(status_code=404, detail="Course not found")
 
 @router.delete("/deleteCourse/{course_id}")  #Delete a course by id
 def delete_course(course_id: int):
@@ -34,4 +36,4 @@ def delete_course(course_id: int):
         if existing_course["id"] == course_id:
             courses_data.remove(existing_course)
             return {"message": f"Course with id {course_id} has been deleted."}
-    return {"error": "Course not found"}
+    raise HTTPException(status_code=404, detail="Course not found")

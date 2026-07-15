@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from schemas.TopicSchema import Topic
 from data.Topic import topics_data
 
@@ -12,7 +12,7 @@ def Get_topic(topic_id: int):
     for topic in topics_data:
         if topic["id"] == topic_id:
             return topic
-    return {"error": "Topic not found"}
+    raise HTTPException(status_code=404, detail="Topic not found")
 
 @router.post("/addTopic",response_model=Topic)#add a new Topic
 def Add_Topic(topic:Topic):
@@ -25,7 +25,7 @@ def Update_Topic(topic_id:int,topic:Topic):
         if existing_topic["id"] == topic_id:
             existing_topic.update(topic.dict())
             return existing_topic
-    return {"error": "Topic not found"}
+    raise HTTPException(status_code=404, detail="Topic not found")  
 
 @router.delete("/deleteTopic/{topic_id}")#delete a topic by id
 def Delete_Topic(topic_id:int):
@@ -33,4 +33,4 @@ def Delete_Topic(topic_id:int):
         if existing_topic["id"] == topic_id:
             topics_data.remove(existing_topic)
             return {"message": f"Topic with id {topic_id} has been deleted."}
-    return {"error": "Topic not found"}
+    raise HTTPException(status_code=404, detail="Topic not found")

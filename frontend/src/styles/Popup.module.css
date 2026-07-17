@@ -1,107 +1,98 @@
 .overlay {
   position: fixed;
   inset: 0;
-
-  background: rgba(0,0,0,.45);
-
+  background: rgba(12, 14, 20, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   display: flex;
   justify-content: center;
   align-items: center;
-
   z-index: 999;
 }
 
 .popup {
-  width: 340px;
-
-  background: white;
-
-  border-radius: 12px;
-
-  padding: 25px;
-
+  width: 90%;
+  max-width: 400px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 32px 24px;
   text-align: center;
-
-  animation: popup .25s ease;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
 
-.popup h2{
-    margin-bottom:10px;
+/* ── Icons ────────────────────────────────────────────────────── */
+.iconWrapper {
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: center;
 }
 
-.popup p{
-    margin-bottom:20px;
-    color:#555;
+.iconSuccess { color: var(--teal); }
+.iconError { color: var(--rose); }
+.iconWarning { color: var(--amber); }
+.iconInfo { color: var(--accent); }
+
+/* ── Typography ───────────────────────────────────────────────── */
+.title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 12px;
 }
 
-.popup button{
-    padding:10px 25px;
-
-    border:none;
-
-    border-radius:8px;
-
-    cursor:pointer;
-
-    color:white;
-
-    font-weight:bold;
+.message {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 24px;
 }
 
-/* Success */
-
-.success{
-    border-top:6px solid #28a745;
+/* ── Actions ──────────────────────────────────────────────────── */
+.actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
 }
 
-.success button{
-    background:#28a745;
+.actions button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  flex: 1;
+  transition: transform 0.15s ease, opacity 0.2s ease;
 }
 
-/* Error */
-
-.error{
-    border-top:6px solid #dc3545;
+.actions button:hover {
+  transform: translateY(-1px);
+  opacity: 0.9;
 }
 
-.error button{
-    background:#dc3545;
+.cancelBtn {
+  background: var(--bg-input);
+  color: var(--text-primary);
+  border: 1px solid var(--border) !important;
 }
 
-/* Warning */
-
-.warning{
-    border-top:6px solid orange;
+.cancelBtn:hover {
+  background: var(--bg-surface-hover);
 }
 
-.warning button{
-    background:orange;
+.okBtn, .confirmBtn {
+  color: #fff;
 }
 
-/* Info */
+/* Button variants based on popup type */
+.successBtn { background: var(--teal); }
+.errorBtn { background: var(--rose); }
+.warningBtn { background: var(--amber); color: #000; }
+.infoBtn { background: var(--accent); }
 
-.info{
-    border-top:6px solid #0d6efd;
-}
-
-.info button{
-    background:#0d6efd;
-}
-
-@keyframes popup{
-
-from{
-
-transform:scale(.8);
-opacity:0;
-
-}
-
-to{
-
-transform:scale(1);
-opacity:1;
-
-}
-
-}
+/* ── Top Border Accents ───────────────────────────────────────── */
+.success { border-top: 4px solid var(--teal); }
+.error { border-top: 4px solid var(--rose); }
+.warning { border-top: 4px solid var(--amber); }
+.info { border-top: 4px solid var(--accent); }

@@ -6,28 +6,28 @@ import Popup from "../Components/Popup";
 
 function CoursesPage() {
   const [courses, setCourses] = useState([]);
- useEffect(() => {
+  useEffect(() => {
     fetch("http://127.0.0.1:8000/courses/")
-    .then((res)=> res.json()) 
-    .then((data) => setCourses(data))
-    .catch((error) => console.error("Error fetching courses:", error));
- }, []);
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Fetched courses data:", data);
+        setCourses(data);
+      })
+      .catch((error) => console.error("Error fetching courses:", error));
+  }, []);
 
   const [showForm, setShowForm] = useState(false);
-  {/*Adding a delete popup and this is the useState for it*/ }
+  const [editingCourse, setEditingCourse] = useState(null);
+
   const [showDeletePopup, setShowDeletePopup] = useState(false);
   const [courseToDelete, setCourseToDelete] = useState(null);
-
 
   function handleRemove(id) {
     setCourseToDelete(id);
     setShowDeletePopup(true);
   }
   function confirmDelete() {
-    setCourses((prev) =>
-      prev.filter((course) => course.id !== courseToDelete)
-    );
-
+    setCourses((prev) => prev.filter((course) => course.id !== courseToDelete));
     setCourseToDelete(null);
     setShowDeletePopup(false);
   }
@@ -36,25 +36,44 @@ function CoursesPage() {
     setShowDeletePopup(false);
   }
 
-  {/*Add courses in Array*/ }
   function handleAdd(courseData) {
     fetch("http://127.0.0.1:8000/courses/addCourse", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(courseData),
     })
-    .then((res) => res.json())
-    .then((data) => {
-      const newCourse = {
-        ...data,
-      };
-      setCourses((prev) => [...prev, newCourse]);
-    })
-    .catch((error) => console.error("Error adding course:", error));
+      .then((res) => res.json())
+      .then((data) => {
+        setCourses((prev) => [...prev, data]);
+      })
+      .catch((error) => console.error("Error adding course:", error));
   }
-  return (
+
+  function handleEdit(course) {
+    setEditingCourse(course);
+    setShowForm(true);
+  }
+
+  function handleUpdate(courseData) {
+    fetch(`http://127.0.0.1:8000/courses/updateCourse/${editingCourse.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: editingCourse.id, ...courseData }),
+    })
+      .then((res) => res.json())
+      .then((updatedCourse) => {
+        setCourses((prev) =>
+          prev.map((c) => (c.id === updatedCourse.id ? updatedCourse : c))
+        );
+      })
+      .catch((error) => console.error("Error updating course:", error));
+  }
+
+  function closeForm() {
+    setShowForm(false);
+    setEditingCourse(null);
+  }
+    return (
     <div>
       <Header />
       {!showForm && (
@@ -62,23 +81,31 @@ function CoursesPage() {
           + Add Course
         </button>
       )}
-      {/* Buttonn for Adding new course */}
       {showForm && (
-        <AddCourseForm onAdd={handleAdd} onClose={() => setShowForm(false)} />
-      )}      <div className="courseCardgrid">
-        {courses.map((course) => (
-          <CourseCard
-            key={course.id}
-            id={course.id}//New Prop
-            title={course.title}
-            description={course.description}
-            duration={course.duration}
-            rating={course.rating}
-            onRemove={handleRemove}//New Prop
-          />
-        ))}
+        <AddCourseForm
+          onAdd={handleAdd}
+          onUpdate={handleUpdate}
+          onClose={closeForm}
+          initialData={editingCourse}
+        />
+      )}
+      <div className="courseCardgrid">
+        {courses && courses.map((course) => {
+          if (!course) return null;
+          return (
+            <CourseCard
+              key={course.id}
+              id={course.id}
+              title={course.title}
+              description={course.description}
+              duration={course.duration}
+              rating={course.rating}
+              onRemove={handleRemove}
+              onEdit={handleEdit}
+            />
+          );
+        })}
       </div>
-      {/* Adding the delete popup component here*/}
       {showDeletePopup && (
         <Popup
           show={true}

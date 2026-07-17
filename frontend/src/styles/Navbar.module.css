@@ -2,57 +2,74 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.25rem 2rem;
-  background: var(--bg-card);
-  border-bottom: 1px solid var(--border-color);
+  padding: 1rem 2rem;
+  background: rgba(19, 22, 42, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
-  backdrop-filter: blur(10px);
 }
 
 .navbarLogo {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  font-size: 1.4rem;
+  gap: 0.5rem;
+  font-size: 1.3rem;
   font-weight: 800;
+  font-family: var(--font-heading);
   letter-spacing: -0.02em;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  background: linear-gradient(135deg, var(--accent), var(--teal));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
   cursor: pointer;
+  text-decoration: none;
+}
+
+/* The icon inside the logo needs its own fill since background-clip
+   only affects text, not inline SVGs */
+.navbarLogo svg {
+  color: var(--accent);
+  flex-shrink: 0;
 }
 
 .navbarLinks {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.25rem;
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
 .navbarLinks a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   text-decoration: none;
   color: var(--text-secondary);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 600;
-  padding: 0.6rem 1.2rem;
-  border-radius: var(--radius-sm);
-  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-full);
   transition: all 0.2s ease;
 }
 
 .navbarLinks a:hover {
-  color: var(--primary);
-  background: var(--primary-glow);
+  color: var(--text-primary);
+  background: var(--accent-light);
+}
+
+.activeLink {
+  color: var(--accent) !important;
+  background: var(--accent-glow) !important;
 }
 
 @media (max-width: 640px) {
   .navbar {
-    padding: 1rem 1.25rem;
+    padding: 0.75rem 1rem;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.6rem;
   }
 }

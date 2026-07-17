@@ -103,3 +103,109 @@
 .btnRemove:hover {
   background: #fbd6d4;
 }
+
+.topicsSection {
+  margin-top: 15px;
+  border-top: 1px dashed #e5e7eb;
+  padding-top: 15px;
+  text-align: left;
+}
+
+.topicsHeader {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #0d523c;
+  margin-bottom: 10px;
+}
+
+.topicList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 15px 0;
+}
+
+.topicItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 8px 0;
+  border-bottom: 1px solid #f4f5f7;
+}
+
+.topicItem:last-child {
+  border-bottom: none;
+}
+
+.topicDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-width: 80%;
+}
+
+.topicTitle {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.topicDesc {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.btnDeleteTopic {
+  background: none;
+  border: none;
+  color: #c0392b;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background 0.15s ease;
+}
+
+.btnDeleteTopic:hover {
+  background: #fdecec;
+}
+
+.addTopicForm {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+  background: #f9fafb;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #f3f4f6;
+}
+
+.topicInput {
+  padding: 6px 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  outline: none;
+}
+
+.topicInput:focus {
+  border-color: #7ea49d;
+}
+
+.btnAddTopic {
+  background: #0d523c;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  align-self: flex-start;
+  transition: background 0.15s ease;
+}
+
+.btnAddTopic:hover {
+  background: #093c2c;
+}

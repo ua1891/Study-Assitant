@@ -14,10 +14,17 @@ def Get_topic(topic_id: int):
             return topic
     raise HTTPException(status_code=404, detail="Topic not found")
 
-@router.post("/addTopic",response_model=Topic)#add a new Topic
-def Add_Topic(topic:Topic):
-     topics_data.append(topic.dict())
-     return topic
+@router.get("/course/{course_id}", response_model=list[Topic])#get topics by course id
+def get_topics_by_course(course_id: int):
+    return [topic for topic in topics_data if topic.get("course_id") == course_id]
+
+@router.post("/addTopic", response_model=Topic)#add a new Topic
+def Add_Topic(topic: Topic):
+    new_topic = topic.dict()
+    if new_topic["id"] is None:
+        new_topic["id"] = max((t["id"] for t in topics_data), default=0) + 1
+    topics_data.append(new_topic)
+    return new_topic
 
 @router.put("/updateTopic/{topic_id}",response_model=Topic)#update a topic by id
 def Update_Topic(topic_id:int,topic:Topic):

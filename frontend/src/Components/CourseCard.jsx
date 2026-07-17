@@ -1,6 +1,8 @@
 import styles from "../styles/CourseCard.module.css";
 import ExplanationPanel from "./ExplanationPanel";
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { Clock, Star, Heart, Trash2, Pencil } from "lucide-react";
 
 function CourseCard({ id, title, description, duration, rating, onRemove, onEdit }) {
     const [interested, setInterested] = useState(0);
@@ -49,12 +51,23 @@ function CourseCard({ id, title, description, duration, rating, onRemove, onEdit
     }
 
     return (
-        <div className={styles.card}>
+        <motion.div
+            className={styles.card}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+        >
             <h1 className={styles.title}>{title}</h1>
 
             <div className={styles.meta}>
-                <span className={styles.duration}>Duration: {duration}</span>
-                <span className={styles.rating}>Rating: {rating}</span>
+                <span className={styles.badge}>
+                    <Clock size={14} />
+                    {duration}
+                </span>
+                <span className={styles.badge + " " + styles.ratingBadge}>
+                    <Star size={14} />
+                    {rating}
+                </span>
             </div>
 
             <ExplanationPanel explanation={description}>
@@ -68,36 +81,36 @@ function CourseCard({ id, title, description, duration, rating, onRemove, onEdit
                                         <span className={styles.topicTitle}>{topic.title}</span>
                                         <span className={styles.topicDesc}>{topic.description}</span>
                                     </div>
-                                    <button 
+                                    <button
                                         className={styles.btnDeleteTopic}
                                         onClick={() => handleDeleteTopic(topic.id)}
                                     >
-                                        Delete
+                                        <Trash2 size={13} />
                                     </button>
                                 </li>
                             ))}
                         </ul>
                     ) : (
-                        <p className={styles.topicDesc}>No topics available.</p>
+                        <p className={styles.topicDesc}>No topics yet — add one below.</p>
                     )}
 
                     <form onSubmit={handleAddTopic} className={styles.addTopicForm}>
                         <input
                             type="text"
-                            placeholder="New topic title"
+                            placeholder="Topic title"
                             value={newTopicTitle}
                             onChange={(e) => setNewTopicTitle(e.target.value)}
                             className={styles.topicInput}
                         />
                         <input
                             type="text"
-                            placeholder="New topic description"
+                            placeholder="Topic description"
                             value={newTopicDesc}
                             onChange={(e) => setNewTopicDesc(e.target.value)}
                             className={styles.topicInput}
                         />
                         <button type="submit" className={styles.btnAddTopic}>
-                            Add Topic
+                            + Add Topic
                         </button>
                     </form>
                 </div>
@@ -105,19 +118,22 @@ function CourseCard({ id, title, description, duration, rating, onRemove, onEdit
 
             <div className={styles.actions}>
                 <button className={styles.btnInterested} onClick={() => setInterested((prev) => prev + 1)}>
-                     Interested ({interested})
+                    <Heart size={14} />
+                    Interested ({interested})
                 </button>
                 <button className={styles.btnRemove} onClick={() => onRemove(id)}>
+                    <Trash2 size={14} />
                     Remove
                 </button>
                 <button
                     className={styles.btnEdit}
                     onClick={() => onEdit({ id, title, description, duration, rating })}
                 >
+                    <Pencil size={14} />
                     Edit
                 </button>
             </div>
-        </div>
+        </motion.div>
     );
 }
 

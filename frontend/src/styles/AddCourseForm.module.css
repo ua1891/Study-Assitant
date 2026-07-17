@@ -1,68 +1,114 @@
 .addCourseForm {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-
-  max-width: 400px;
-  margin: 20px auto;
-  padding: 24px;
-
-  background: #ff3c3c00;
-  border: 1px solid #bac4d9;
-  border-radius: 16px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  gap: 16px;
+  max-width: 500px;
+  margin: 24px auto;
+  padding: 28px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--card-shadow);
 }
 
-.input {
+.formTitle {
+  font-size: 1.25rem;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.inputGroup label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.row {
+  display: flex;
+  gap: 16px;
+}
+
+@media (max-width: 480px) {
+  .row {
+    flex-direction: column;
+  }
+}
+
+.input, .textarea {
   padding: 10px 14px;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
   font-size: 0.95rem;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
   outline: none;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.input:focus {
-  border-color: #0d523c;
-  box-shadow: 0 0 0 3px rgba(13, 82, 60, 0.1);
+.textarea {
+  resize: vertical;
+  min-height: 80px;
 }
 
-/* Button Container */
+.input::placeholder, .textarea::placeholder {
+  color: var(--text-muted);
+}
+
+.input:focus, .textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+/* ── Buttons ──────────────────────────────────────────────────── */
 .buttonGroup {
   display: flex;
+  justify-content: flex-end;
   gap: 12px;
-  margin-top: 10px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
 }
 
-/* Common Button Styles */
-.submitBtn,
-.cancelBtn {
-  flex: 1;
-  padding: 12px;
+.submitBtn, .cancelBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 20px;
   border: none;
-  border-radius: 8px;
-  font-size: 1rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
-  transition: opacity 0.2s ease;
 }
 
-/* Add Course Button */
 .submitBtn {
-  background: linear-gradient(90deg, #0d523c, #7ea49d);
+  background: linear-gradient(135deg, var(--accent), #9b7cfc);
   color: white;
+  box-shadow: 0 4px 12px rgba(124, 92, 252, 0.25);
 }
 
 .submitBtn:hover {
-  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(124, 92, 252, 0.4);
 }
 
-/* Cancel Button */
 .cancelBtn {
-  background: #f44336;
-  color: white;
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
 }
 
 .cancelBtn:hover {
-  opacity: 0.9;
+  background: var(--bg-input);
+  color: var(--text-primary);
 }

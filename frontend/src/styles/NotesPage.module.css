@@ -1,0 +1,345 @@
+/* ─── Page Wrapper ───────────────────────────────────────────────────── */
+.pageWrapper {
+  padding: 32px 16px 48px;
+}
+
+/* ─── Page Header ────────────────────────────────────────────────────── */
+.pageHeader {
+  margin-bottom: 28px;
+}
+
+.pageTitle {
+  font-size: 1.9rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #0d523c, #7ea49d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 6px;
+}
+
+.pageSubtitle {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+/* ─── Two-Column Layout ──────────────────────────────────────────────── */
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+@media (max-width: 700px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ─── Shared Card ────────────────────────────────────────────────────── */
+.card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.13);
+}
+
+/* ─── Card Headings ──────────────────────────────────────────────────── */
+.cardTitle {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0d523c;
+  margin-bottom: 14px;
+}
+
+/* ─── Left Panel — Your Note ─────────────────────────────────────────── */
+.noteTextarea {
+  width: 100%;
+  min-height: 110px;
+  padding: 10px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  resize: vertical;
+  outline: none;
+  color: #333;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  line-height: 1.5;
+}
+
+.noteTextarea:focus {
+  border-color: #0d523c;
+  box-shadow: 0 0 0 3px rgba(13, 82, 60, 0.1);
+}
+
+.noteActions {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+
+.btnSummarize {
+  background: linear-gradient(90deg, #6366f1, #818cf8);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 9px 20px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.15s ease;
+}
+
+.btnSummarize:hover {
+  opacity: 0.88;
+  transform: translateY(-2px);
+}
+
+.btnSummarize:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btnSave {
+  background: linear-gradient(90deg, #0d523c, #7ea49d);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 9px 20px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.15s ease;
+}
+
+.btnSave:hover {
+  opacity: 0.88;
+  transform: translateY(-2px);
+}
+
+/* ─── AI Summary ─────────────────────────────────────────────────────── */
+.summarySection {
+  margin-top: 20px;
+  border-top: 1px dashed #e5e7eb;
+  padding-top: 16px;
+}
+
+.summaryTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0d523c;
+  margin-bottom: 10px;
+}
+
+.summaryList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.summaryList li {
+  font-size: 0.88rem;
+  color: #444;
+  padding-left: 16px;
+  position: relative;
+}
+
+.summaryList li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #0d523c;
+  font-weight: 700;
+}
+
+.summaryLoading {
+  font-size: 0.88rem;
+  color: #7ea49d;
+  font-style: italic;
+}
+
+/* ─── Right Panel — Ask My Notes ─────────────────────────────────────── */
+.askCard {
+  background: #f5f3ff;
+  border: 1px solid #ddd6fe;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.07);
+  transition: box-shadow 0.3s ease;
+}
+
+.askCard:hover {
+  box-shadow: 0 12px 28px rgba(99, 102, 241, 0.13);
+}
+
+.askCardTitle {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #4f46e5;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.askCardTitle span {
+  font-size: 1.1rem;
+}
+
+.askLabel {
+  font-size: 0.88rem;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+.askInput {
+  width: 100%;
+  padding: 9px 14px;
+  border: 1px solid #c4b5fd;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-family: inherit;
+  outline: none;
+  background: #fff;
+  color: #333;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.askInput:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+}
+
+.btnAsk {
+  margin-top: 12px;
+  background: linear-gradient(90deg, #6366f1, #818cf8);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 9px 20px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.15s ease;
+}
+
+.btnAsk:hover {
+  opacity: 0.88;
+  transform: translateY(-2px);
+}
+
+.btnAsk:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ─── Answer Box ─────────────────────────────────────────────────────── */
+.answerBox {
+  margin-top: 16px;
+  background: #fff;
+  border: 1.5px dashed #c4b5fd;
+  border-radius: 10px;
+  padding: 14px;
+  font-size: 0.88rem;
+  color: #333;
+  line-height: 1.6;
+  min-height: 60px;
+}
+
+.answerSource {
+  margin-top: 10px;
+  font-size: 0.8rem;
+  color: #16a34a;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.answerSource::before {
+  content: "●";
+  font-size: 0.6rem;
+}
+
+/* ─── Saved Notes List ───────────────────────────────────────────────── */
+.savedSection {
+  margin-top: 28px;
+}
+
+.savedTitle {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0d523c;
+  margin-bottom: 14px;
+}
+
+.savedList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.savedItem {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px 18px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  transition: box-shadow 0.2s ease;
+}
+
+.savedItem:hover {
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+}
+
+.savedItemText {
+  font-size: 0.88rem;
+  color: #444;
+  line-height: 1.55;
+  flex: 1;
+}
+
+.btnDeleteNote {
+  background: none;
+  border: none;
+  color: #c0392b;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background 0.15s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.btnDeleteNote:hover {
+  background: #fdecec;
+}
+
+.emptyState {
+  font-size: 0.88rem;
+  color: #999;
+  font-style: italic;
+}

@@ -27,9 +27,19 @@ function CoursesPage() {
     setShowDeletePopup(true);
   }
   function confirmDelete() {
-    setCourses((prev) => prev.filter((course) => course.id !== courseToDelete));
-    setCourseToDelete(null);
-    setShowDeletePopup(false);
+    fetch(`http://127.0.0.1:8000/courses/deleteCourse/${courseToDelete}`, {
+      method: "DELETE",
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to delete course");
+        return res.json();
+      })
+      .then(() => {
+        setCourses((prev) => prev.filter((course) => course.id !== courseToDelete));
+        setCourseToDelete(null);
+        setShowDeletePopup(false);
+      })
+      .catch((error) => console.error("Error deleting course:", error));
   }
   function cancelDelete() {
     setCourseToDelete(null);

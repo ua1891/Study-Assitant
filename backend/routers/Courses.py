@@ -1,6 +1,7 @@
 from schemas.CoursesSchema import Course
 from fastapi import APIRouter, HTTPException
 from data.courses import courses_data
+from data.Topic import topics_data
 
 router = APIRouter(prefix="/courses", tags=["Courses"])
 
@@ -38,5 +39,9 @@ def delete_course(course_id: int):
     for existing_course in courses_data:
         if existing_course["id"] == course_id:
             courses_data.remove(existing_course)
-            return {"message": f"Course with id {course_id} has been deleted."}
+            # Cascade: remove all topics that belong to this course
+            topics_to_remove = [t for t in topics_data if t.get("course_id") == course_id]
+            for t in topics_to_remove:
+                topics_data.remove(t)
+            return {"message": f"Course {course_id} and its topics have been deleted."}
     raise HTTPException(status_code=404, detail="Course not found")

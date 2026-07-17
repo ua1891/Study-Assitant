@@ -1,13 +1,12 @@
 .footer {
   text-align: center;
-  padding: 28px 20px;
-  background: linear-gradient(135deg, #0f0c29, #24243e);
-  color: rgba(255, 255, 255, 0.75);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  font-size: 0.9rem;
-  letter-spacing: 0.3px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 40px 20px 30px;
+  background: var(--bg-base);
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  border-top: 1px solid var(--border);
   position: relative;
+  margin-top: auto;
 }
 
 .footer::before {
@@ -16,8 +15,54 @@
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 60px;
-  height: 3px;
-  background: linear-gradient(90deg, #7f5af0, #2cb67d);
+  width: 100px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), var(--teal), transparent);
   border-radius: 2px;
+  opacity: 0.5;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+}
+
+.brand {
+  font-weight: 700;
+  color: var(--text-primary);
+  font-family: var(--font-heading);
+}
+
+.separator {
+  color: var(--text-muted);
+}
+
+.tagline {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.heart {
+  color: var(--rose);
+  fill: var(--rose);
+}
+
+.copyright {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 480px) {
+  .content {
+    flex-direction: column;
+    gap: 4px;
+  }
+  .separator {
+    display: none;
+  }
 }

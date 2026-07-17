@@ -3,66 +3,43 @@
 :root {
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   --font-heading: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-  
-  /* Modern HSL Palette */
-  --bg-primary: #f8fafc;
-  --bg-card: #ffffff;
-  --bg-card-hover: #ffffff;
-  --text-primary: #0f172a;
-  --text-secondary: #475569;
-  --text-muted: #94a3b8;
-  
-  --primary: #6366f1; /* Indigo */
-  --primary-hover: #4f46e5;
-  --primary-glow: rgba(99, 102, 241, 0.15);
-  
-  --secondary: #14b8a6; /* Teal */
-  --secondary-hover: #0d9488;
-  
-  --danger: #ef4444; /* Rose */
-  --danger-hover: #dc2626;
-  --danger-light: #fef2f2;
-  
-  --border-color: #e2e8f0;
-  --border-focus: #cbd5e1;
-  
-  --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05), 0 20px 25px -5px rgba(0, 0, 0, 0.02);
-  --card-shadow-hover: 0 20px 25px -5px rgba(99, 102, 241, 0.08), 0 10px 10px -5px rgba(99, 102, 241, 0.03);
-  
+
+  /* ── Dark-mode-first palette ─────────────────────────────────────── */
+  --bg-base: #0c0e14;
+  --bg-surface: #13162a;
+  --bg-surface-hover: #1a1e38;
+  --bg-elevated: #1e2240;
+  --bg-input: #161a30;
+
+  --text-primary: #f0f0f5;
+  --text-secondary: #8b8fa3;
+  --text-muted: #585c70;
+
+  --accent: #7c5cfc;
+  --accent-hover: #6a48e6;
+  --accent-glow: rgba(124, 92, 252, 0.18);
+  --accent-light: rgba(124, 92, 252, 0.08);
+
+  --teal: #2dd4bf;
+  --teal-glow: rgba(45, 212, 191, 0.15);
+
+  --rose: #fb7185;
+  --rose-glow: rgba(251, 113, 133, 0.12);
+
+  --amber: #fbbf24;
+
+  --border: rgba(255, 255, 255, 0.07);
+  --border-focus: rgba(124, 92, 252, 0.35);
+
+  --card-shadow: 0 4px 24px rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0, 0, 0, 0.15);
+  --card-shadow-hover: 0 8px 32px rgba(124, 92, 252, 0.12), 0 4px 16px rgba(0, 0, 0, 0.3);
+
+  --radius-xs: 6px;
   --radius-sm: 8px;
   --radius-md: 12px;
-  --radius-lg: 20px;
-  --radius-xl: 28px;
-  
-  color-scheme: light dark;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg-primary: #0b0f19;
-    --bg-card: #151b2c;
-    --bg-card-hover: #1b233a;
-    --text-primary: #f8fafc;
-    --text-secondary: #94a3b8;
-    --text-muted: #64748b;
-    
-    --primary: #818cf8;
-    --primary-hover: #6366f1;
-    --primary-glow: rgba(129, 140, 248, 0.2);
-    
-    --secondary: #2dd4bf;
-    --secondary-hover: #14b8a6;
-    
-    --danger: #f87171;
-    --danger-hover: #ef4444;
-    --danger-light: rgba(248, 113, 113, 0.1);
-    
-    --border-color: #1e293b;
-    --border-focus: #334155;
-    
-    --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -2px rgba(0, 0, 0, 0.2);
-    --card-shadow-hover: 0 20px 25px -5px rgba(129, 140, 248, 0.12), 0 10px 10px -5px rgba(129, 140, 248, 0.04);
-  }
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
 }
 
 * {
@@ -71,13 +48,32 @@
   padding: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: var(--font-sans);
-  background: var(--bg-primary);
+  background: var(--bg-base);
   color: var(--text-primary);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-base);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--text-muted);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
 }
 
 #root {
@@ -100,21 +96,22 @@ button {
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Skeleton Loading Animation */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ── Skeleton Loading ──────────────────────────────────────────── */
 @keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }
 
 .skeleton {
-  background: linear-gradient(90deg, 
-    var(--border-color) 25%, 
-    var(--bg-primary) 50%, 
-    var(--border-color) 75%
+  background: linear-gradient(90deg,
+    var(--bg-surface) 25%,
+    var(--bg-surface-hover) 50%,
+    var(--bg-surface) 75%
   );
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite linear;
@@ -134,8 +131,8 @@ button {
 }
 
 .skeleton-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 24px;
   min-height: 220px;

@@ -1,69 +1,44 @@
+/* ── Course Card Grid ──────────────────────────────────────────── */
 .courseCardgrid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 16px; /* space between cards */
-  padding: 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+  padding: 24px 0;
 }
+
+@media (max-width: 640px) {
+  .courseCardgrid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 16px 0;
+  }
+}
+
+/* ── Add Course Button ────────────────────────────────────────── */
 .addCourseBtn {
-  display: block;
-  margin: 20px auto;
-  background: linear-gradient(90deg, #0d523c, #7ea49d);
-  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 24px auto 8px;
+  padding: 12px 28px;
+  background: linear-gradient(135deg, var(--accent), #9b7cfc);
+  color: #fff;
   border: none;
-  border-radius: 10px;
-  padding: 10px 20px;
+  border-radius: var(--radius-full);
+  font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;
+  letter-spacing: 0.02em;
+  box-shadow: 0 4px 20px rgba(124, 92, 252, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .addCourseBtn:hover {
-  opacity: 0.9;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 28px rgba(124, 92, 252, 0.45);
 }
 
-
-
-.addCourseForm {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-
-  max-width: 400px;
-  margin: 20px auto;
-  padding: 24px;
-
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 16px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-}
-
-.addCourseForm input {
-  padding: 10px 14px;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  font-size: 0.95rem;
-  outline: none;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.addCourseForm input:focus {
-  border-color: #0d523c;
-  box-shadow: 0 0 0 3px rgba(13, 82, 60, 0.1);
-}
-
-.addCourseForm button {
-  align-self: flex-start;
-  background: linear-gradient(90deg, #0d523c, #7ea49d);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: opacity 0.2s ease;
-}
-
-.addCourseForm button:hover {
-  opacity: 0.9;
+.addCourseBtn:active {
+  transform: translateY(0);
 }

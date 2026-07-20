@@ -7,6 +7,7 @@ dist/
 # Python
 # =========================
 __pycache__/
+__init.py__
 *.py[cod]
 *.pyo
 *.pyd
@@ -75,7 +76,7 @@ htmlcov/
 *.lock
 
 # =========================
-# Ollama (if you ever save models locally)
+# Ollama
 # =========================
 ollama_models/
 

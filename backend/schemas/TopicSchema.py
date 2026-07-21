@@ -2,8 +2,9 @@
 from pydantic import BaseModel
 from typing import Optional
 
-class Topic(BaseModel):
-    id: Optional[int] = None
-    course_id: int
+class CreateTopic(BaseModel):
+    course_id: str
     title: str
     description: str
+class TopicResponse(CreateTopic):
+    id: str

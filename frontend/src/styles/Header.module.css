@@ -3,9 +3,9 @@
   overflow: hidden;
   text-align: center;
   padding: 80px 20px 60px;
-  background: linear-gradient(160deg, #0c0e14 0%, #1a1040 40%, #13162a 70%, #0c0e14 100%);
+  background: var(--bg-base);
   font-family: var(--font-heading);
-  color: #fff;
+  color: var(--text-primary);
 }
 
 /* ── Decorative Orbs ──────────────────────────────────────────── */
@@ -13,7 +13,7 @@
   position: absolute;
   border-radius: 50%;
   filter: blur(80px);
-  opacity: 0.4;
+  opacity: 0.1;
   z-index: 0;
   pointer-events: none;
   animation: float 10s ease-in-out infinite;
@@ -63,17 +63,7 @@
   padding: 0.1em 0;
   margin: 0 0 12px;
   display: inline-block;
-  background: linear-gradient(90deg, #ffffff, var(--accent), var(--teal), #ffffff);
-  background-size: 300% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-  animation: shine 8s linear infinite;
-}
-
-@keyframes shine {
-  to { background-position: 300% center; }
+  color: var(--text-primary);
 }
 
 /* ── Subtitle ─────────────────────────────────────────────────── */

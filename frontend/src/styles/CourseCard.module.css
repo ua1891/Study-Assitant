@@ -12,7 +12,7 @@
 }
 
 .card:hover {
-  border-color: rgba(124, 92, 252, 0.2);
+  border-color: var(--accent);
   box-shadow: var(--card-shadow-hover);
   transform: translateY(-4px);
 }
@@ -22,10 +22,7 @@
   font-size: 1.35rem;
   font-weight: 700;
   margin-bottom: 14px;
-  background: linear-gradient(135deg, var(--accent), var(--teal));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--text-primary);
 }
 
 /* ── Meta Badges ──────────────────────────────────────────────── */
@@ -84,7 +81,7 @@
 .btnInterested {
   background: var(--accent-light);
   color: var(--accent);
-  border: 1px solid rgba(124, 92, 252, 0.15) !important;
+  border: 1px solid var(--accent-light) !important;
 }
 
 .btnInterested:hover {
@@ -211,7 +208,7 @@
 }
 
 .btnAddTopic {
-  background: linear-gradient(135deg, var(--accent), #9b7cfc);
+  background: var(--accent);
   color: #fff;
   border: none;
   border-radius: var(--radius-sm);
@@ -220,10 +217,11 @@
   font-weight: 600;
   cursor: pointer;
   align-self: flex-start;
-  transition: transform 0.15s ease, box-shadow 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .btnAddTopic:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(124, 92, 252, 0.3);
+  background: var(--accent-hover);
+  box-shadow: 0 2px 8px var(--accent-light);
 }

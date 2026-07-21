@@ -1,6 +1,5 @@
 from schemas.CoursesSchema import CreateCourse as Course,CourseResponse
 from fastapi import APIRouter, HTTPException
-from data.Topic import topics_data
 from data.CoursesQueries import (
     Insert_Courses,
     GetAllCourse,

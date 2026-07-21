@@ -4,35 +4,35 @@
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   --font-heading: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
 
-  /* ── Dark-mode-first palette ─────────────────────────────────────── */
-  --bg-base: #0c0e14;
-  --bg-surface: #13162a;
-  --bg-surface-hover: #1a1e38;
-  --bg-elevated: #1e2240;
-  --bg-input: #161a30;
+  /* ── Light-mode-first palette ─────────────────────────────────────── */
+  --bg-base: #fafafa;
+  --bg-surface: #ffffff;
+  --bg-surface-hover: #f9fafb;
+  --bg-elevated: #ffffff;
+  --bg-input: #ffffff;
 
-  --text-primary: #f0f0f5;
-  --text-secondary: #8b8fa3;
-  --text-muted: #585c70;
+  --text-primary: #334155;
+  --text-secondary: #64748b;
+  --text-muted: #cbd5e1;
 
-  --accent: #7c5cfc;
-  --accent-hover: #6a48e6;
-  --accent-glow: rgba(124, 92, 252, 0.18);
-  --accent-light: rgba(124, 92, 252, 0.08);
+  --accent: #89b4fa;
+  --accent-hover: #74a1f5;
+  --accent-glow: rgba(137, 180, 250, 0.15);
+  --accent-light: rgba(137, 180, 250, 0.08);
 
-  --teal: #2dd4bf;
-  --teal-glow: rgba(45, 212, 191, 0.15);
+  --teal: #a6e3a1;
+  --teal-glow: rgba(166, 227, 161, 0.15);
 
-  --rose: #fb7185;
-  --rose-glow: rgba(251, 113, 133, 0.12);
+  --rose: #f38ba8;
+  --rose-glow: rgba(243, 139, 168, 0.12);
 
-  --amber: #fbbf24;
+  --amber: #f9e2af;
 
-  --border: rgba(255, 255, 255, 0.07);
-  --border-focus: rgba(124, 92, 252, 0.35);
+  --border: rgba(0, 0, 0, 0.05);
+  --border-focus: rgba(137, 180, 250, 0.4);
 
-  --card-shadow: 0 4px 24px rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0, 0, 0, 0.15);
-  --card-shadow-hover: 0 8px 32px rgba(124, 92, 252, 0.12), 0 4px 16px rgba(0, 0, 0, 0.3);
+  --card-shadow: 0 2px 10px rgba(0, 0, 0, 0.02), 0 1px 2px rgba(0, 0, 0, 0.01);
+  --card-shadow-hover: 0 10px 25px rgba(0, 0, 0, 0.04), 0 4px 10px rgba(0, 0, 0, 0.02);
 
   --radius-xs: 6px;
   --radius-sm: 8px;
@@ -109,9 +109,9 @@ a {
 
 .skeleton {
   background: linear-gradient(90deg,
-    var(--bg-surface) 25%,
-    var(--bg-surface-hover) 50%,
-    var(--bg-surface) 75%
+    #f1f5f9 25%,
+    #e2e8f0 50%,
+    #f1f5f9 75%
   );
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite linear;

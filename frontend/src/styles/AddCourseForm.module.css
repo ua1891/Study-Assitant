@@ -92,14 +92,15 @@
 }
 
 .submitBtn {
-  background: linear-gradient(135deg, var(--accent), #9b7cfc);
+  background: var(--accent);
   color: white;
-  box-shadow: 0 4px 12px rgba(124, 92, 252, 0.25);
+  transition: all 0.2s ease;
 }
 
 .submitBtn:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(124, 92, 252, 0.4);
+  background: var(--accent-hover);
+  box-shadow: 0 4px 12px var(--accent-light);
 }
 
 .cancelBtn {

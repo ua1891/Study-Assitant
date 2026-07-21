@@ -14,10 +14,7 @@
 .pageTitle {
   font-size: 2.2rem;
   font-weight: 800;
-  background: linear-gradient(135deg, var(--accent), var(--teal));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--text-primary);
   margin-bottom: 8px;
 }
 
@@ -190,8 +187,8 @@
 
 /* ─── Ask My Notes Area ──────────────────────────────────────────────── */
 .askCard {
-  background: linear-gradient(180deg, var(--bg-surface) 0%, rgba(124, 92, 252, 0.03) 100%);
-  border-color: rgba(124, 92, 252, 0.2);
+  background: var(--bg-surface);
+  border-color: var(--border);
 }
 
 .askLabel {
@@ -267,7 +264,7 @@
 .answerBox {
   margin-top: 20px;
   background: var(--bg-elevated);
-  border: 1px solid rgba(124, 92, 252, 0.3);
+  border: 1px solid var(--border);
   border-radius: var(--radius-md);
   padding: 16px;
 }

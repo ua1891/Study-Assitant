@@ -1,13 +1,7 @@
-from pydantic_ai import Agent
-from pydantic_ai.models.openai import OpenAIChatModel as OpenAIModel
-from pydantic_ai.providers.openai import OpenAIProvider
+from Agent.Notes_Agent import Summarize_Notes
 
-model = OpenAIModel(
-    model_name="gemma3",
-    provider=OpenAIProvider(base_url="http://localhost:11434/v1", api_key="ollama"),
+Result=Summarize_Notes.run_sync("React is a JavaScript library for building UIs. It uses components, "
+    "a virtual DOM for performance, and one-way data binding via props and state."
 )
-
-agent = Agent(model, system_prompt="You are a helpful assistant.")
-
-result = agent.run_sync("Summarize this in one sentence: React is a JavaScript library for building UIs.")
-print(result.output)
+print(Result)
+print(type(Result))

@@ -1,20 +1,36 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FileText, Sparkles, MessageCircle, Trash2, Send, Save } from "lucide-react";
+import {
+    FileText,
+    Sparkles,
+    MessageCircle,
+    Trash2,
+    Send,
+    Save,
+    CheckCircle2,
+} from "lucide-react";
 import Header from "../Components/Header";
 import styles from "../styles/NotesPage.module.css";
 
+const API_BASE = "http://127.0.0.1:8000";
+
 function NotesPage() {
+    // ── Draft note + AI summary ──
     const [noteText, setNoteText] = useState("");
     const [savedNotes, setSavedNotes] = useState([]);
 
-    const [summary, setSummary] = useState([]);
+    const [summaryPoints, setSummaryPoints] = useState([]); // keypoints[]
+    const [summaryExplanation, setSummaryExplanation] = useState(""); // explanation
     const [isSummarizing, setIsSummarizing] = useState(false);
+    const [summarizeError, setSummarizeError] = useState("");
 
+    // ── Ask my notes ──
     const [question, setQuestion] = useState("");
     const [answer, setAnswer] = useState("");
     const [isAsking, setIsAsking] = useState(false);
+    const [askError, setAskError] = useState("");
 
+    // ── Load / persist saved notes ──
     useEffect(() => {
         const stored = localStorage.getItem("studyAssistantNotes");
         if (stored) {
@@ -33,53 +49,69 @@ function NotesPage() {
             ...prev,
         ]);
         setNoteText("");
-        setSummary([]);
+        setSummaryPoints([]);
+        setSummaryExplanation("");
     }
 
     function handleDeleteNote(id) {
         setSavedNotes((prev) => prev.filter((note) => note.id !== id));
     }
 
+    // ── Summarize (wired to the real Pydantic AI / gemma3 endpoint) ──
     function handleSummarize() {
         if (!noteText.trim()) return;
         setIsSummarizing(true);
-        setSummary([]);
+        setSummarizeError("");
+        setSummaryPoints([]);
+        setSummaryExplanation("");
 
-        fetch("http://127.0.0.1:8000/notes/summarize", {
+        fetch(`${API_BASE}/agent/summarize`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ text: noteText }),
         })
-            .then((res) => res.json())
+            .then((res) => {
+                if (!res.ok) throw new Error("Summarize request failed");
+                return res.json();
+            })
             .then((data) => {
-                setSummary(data.summary || []);
+                // Real shape: { text, explanation, keypoints }
+                setSummaryExplanation(data.explanation || "");
+                setSummaryPoints(data.keypoints || []);
                 setIsSummarizing(false);
             })
             .catch((err) => {
                 console.error("Error summarizing note:", err);
+                setSummarizeError("Couldn't summarize right now. Is the backend/Ollama running?");
                 setIsSummarizing(false);
             });
     }
 
+    // ── Ask my notes (endpoint not built yet — see Week 5 tool-use step) ──
     function handleAskQuestion() {
         if (!question.trim()) return;
         setIsAsking(true);
+        setAskError("");
         setAnswer("");
 
         const allNoteTexts = savedNotes.map((n) => n.text).join("\n\n");
 
-        fetch("http://127.0.0.1:8000/notes/ask", {
+        fetch(`${API_BASE}/agent/ask`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ question, context: allNoteTexts }),
         })
-            .then((res) => res.json())
+            .then((res) => {
+                if (!res.ok) throw new Error("Ask request failed");
+                return res.json();
+            })
             .then((data) => {
                 setAnswer(data.answer || "No answer found.");
                 setIsAsking(false);
             })
             .catch((err) => {
                 console.error("Error asking question:", err);
+                setAskError("This feature isn't wired up on the backend yet.");
                 setIsAsking(false);
             });
     }
@@ -101,7 +133,7 @@ function NotesPage() {
                 </div>
 
                 <div className={styles.layout}>
-                    {/* ── Left: Your Note + AI Summary ── */}
+                    {/* ── Left: Draft Note + AI Summary ── */}
                     <div className={styles.card}>
                         <h3 className={styles.cardTitle}>
                             <FileText size={18} />
@@ -134,8 +166,14 @@ function NotesPage() {
                             </button>
                         </div>
 
+                        {summarizeError && (
+                            <p style={{ color: "var(--rose)", fontSize: "0.85rem", marginTop: 10 }}>
+                                {summarizeError}
+                            </p>
+                        )}
+
                         {/* AI Summary Output */}
-                        {(isSummarizing || summary.length > 0) && (
+                        {(isSummarizing || summaryPoints.length > 0) && (
                             <motion.div
                                 className={styles.summarySection}
                                 initial={{ opacity: 0, height: 0 }}
@@ -145,6 +183,7 @@ function NotesPage() {
                                     <Sparkles size={16} className={styles.sparkleIcon} />
                                     AI Summary
                                 </h4>
+
                                 {isSummarizing ? (
                                     <div className={styles.loadingSkeleton}>
                                         <div className="skeleton skeleton-text" />
@@ -152,18 +191,32 @@ function NotesPage() {
                                         <div className="skeleton skeleton-text" style={{ width: "80%" }} />
                                     </div>
                                 ) : (
-                                    <ul className={styles.summaryList}>
-                                        {summary.map((point, index) => (
-                                            <motion.li
-                                                key={index}
-                                                initial={{ opacity: 0, x: -10 }}
-                                                animate={{ opacity: 1, x: 0 }}
-                                                transition={{ delay: index * 0.1 }}
+                                    <>
+                                        {summaryExplanation && (
+                                            <p
+                                                style={{
+                                                    color: "var(--text-secondary)",
+                                                    fontSize: "0.9rem",
+                                                    lineHeight: 1.6,
+                                                    marginBottom: 12,
+                                                }}
                                             >
-                                                {point}
-                                            </motion.li>
-                                        ))}
-                                    </ul>
+                                                {summaryExplanation}
+                                            </p>
+                                        )}
+                                        <ul className={styles.summaryList}>
+                                            {summaryPoints.map((point, index) => (
+                                                <motion.li
+                                                    key={index}
+                                                    initial={{ opacity: 0, x: -10 }}
+                                                    animate={{ opacity: 1, x: 0 }}
+                                                    transition={{ delay: index * 0.1 }}
+                                                >
+                                                    {point}
+                                                </motion.li>
+                                            ))}
+                                        </ul>
+                                    </>
                                 )}
                             </motion.div>
                         )}
@@ -176,7 +229,9 @@ function NotesPage() {
                             Chat with your Notes
                         </h3>
 
-                        <p className={styles.askLabel}>Ask a question based on your saved notes below.</p>
+                        <p className={styles.askLabel}>
+                            Ask a question based on your saved notes below.
+                        </p>
 
                         <div className={styles.askInputWrapper}>
                             <input
@@ -196,6 +251,12 @@ function NotesPage() {
                             </button>
                         </div>
 
+                        {askError && (
+                            <p style={{ color: "var(--rose)", fontSize: "0.85rem", marginTop: 10 }}>
+                                {askError}
+                            </p>
+                        )}
+
                         {/* Answer Box */}
                         <AnimatePresence>
                             {answer && (
@@ -205,9 +266,7 @@ function NotesPage() {
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0 }}
                                 >
-                                    <div className={styles.answerContent}>
-                                        {answer}
-                                    </div>
+                                    <div className={styles.answerContent}>{answer}</div>
                                     <p className={styles.answerSource}>
                                         <CheckCircle2 size={12} /> Answered from your saved notes
                                     </p>
@@ -255,8 +314,5 @@ function NotesPage() {
         </motion.div>
     );
 }
-
-// Needed CheckCircle2 import specifically for the notes page source indicator
-import { CheckCircle2 } from "lucide-react";
 
 export default NotesPage;

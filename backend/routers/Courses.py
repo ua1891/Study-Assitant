@@ -1,4 +1,4 @@
-from schemas.CoursesSchema import CreateCourse as Course,CourseResponse
+from schemas.CoursesSchema import CreateCourse as Course,CourseResponse, UpdateCourse as UpdateCourseSchema
 from fastapi import APIRouter, HTTPException
 from data.CoursesQueries import (
     Insert_Courses,
@@ -39,7 +39,7 @@ def add_course(course: Course):
 
 
 @router.put("/updateCourse/{course_id}", response_model=CourseResponse)  #Update a course by id
-def update_course(course_id: str, course: Course):  
+def update_course(course_id: str, course: UpdateCourseSchema):  
     updated= UpdateCourse(course_id,course)
     if updated==0:   
         raise HTTPException(status_code=404, detail="Course not found")

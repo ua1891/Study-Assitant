@@ -1,7 +1,11 @@
-from Agent.Notes_Agent import Summarize_Notes
+from Agent.Study_Agent import Prepare_Study_Plan
 
-Result=Summarize_Notes.run_sync("React is a JavaScript library for building UIs. It uses components, "
-    "a virtual DOM for performance, and one-way data binding via props and state."
+prompt_text = (
+    "Course: Prompt Engineering\n"
+    "Today's date: 2026-07-22\n"
+    "Deadline: 2026-08-06 09:29:06\n"
+    "Topics to cover: Intro, Improve existing Prompt"
 )
-print(Result)
-print(type(Result))
+
+result = Prepare_Study_Plan.run_sync(prompt_text)
+print(result.output)

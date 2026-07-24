@@ -5,4 +5,14 @@ class NotesInput(BaseModel):
 class  NotesSummary(NotesInput):
     explanation:str
     keypoints:list[str]
+
+class StudySession(BaseModel):
+    day: str
+    topic: str
+    focus: str
+
+class StudyPlan(BaseModel):
+    sessions: list[StudySession]
+    summary: str
+        
     

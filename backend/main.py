@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routers import Courses,Topic,Notes
 
+
 app = FastAPI(
     title="Study Assistant API",
     description="This is a Study Assistant API that provides information about courses and allows users to manage their courses.",

@@ -225,3 +225,29 @@
   background: var(--accent-hover);
   box-shadow: 0 2px 8px var(--accent-light);
 }
+
+/* ── Generate Plan Button ─────────────────────────────────────── */
+.btnGeneratePlan {
+  background: rgba(99, 102, 241, 0.1);
+  color: var(--accent);
+  border: 1px solid rgba(99, 102, 241, 0.2) !important;
+}
+
+.btnGeneratePlan:hover {
+  background: rgba(99, 102, 241, 0.15);
+}
+
+.btnGeneratePlan:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

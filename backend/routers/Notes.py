@@ -28,7 +28,7 @@ def generate_Study_plan(courseID: str):
     prompt_text = (
         f"Course: {course['title']}\n"
         f"Today's date: {date.today().isoformat()}\n"
-        f"Deadline: {course['deadline']}\n"
+        f"Deadline: {course.get('deadline') or '1 week from today'}\n"
         f"Topics to cover: {', '.join(topic_titles)}"
     )
 

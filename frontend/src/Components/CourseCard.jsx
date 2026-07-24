@@ -1,8 +1,9 @@
 import styles from "../styles/CourseCard.module.css";
 import ExplanationPanel from "./ExplanationPanel";
+import StudyPlanModal from "./StudyPlanModal";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Clock, Star, Heart, Trash2, Pencil } from "lucide-react";
+import { Clock, Star, Heart, Trash2, Pencil, Calendar, Loader2 } from "lucide-react";
 
 function CourseCard({
     id,
@@ -17,6 +18,11 @@ function CourseCard({
     const [topics, setTopics] = useState([]);
     const [newTopicTitle, setNewTopicTitle] = useState("");
     const [newTopicDesc, setNewTopicDesc] = useState("");
+    
+    const [studyPlan, setStudyPlan] = useState(null);
+    const [isGeneratingPlan, setIsGeneratingPlan] = useState(false);
+    const [planError, setPlanError] = useState(null);
+    const [showPlanModal, setShowPlanModal] = useState(false);
 
     useEffect(() => {
         fetch(`http://127.0.0.1:8000/topics/course/${id}`)
@@ -94,6 +100,31 @@ function CourseCard({
             .catch((err) => {
                 console.error("Error deleting topic:", err);
             });
+    }
+
+    async function handleGenerateStudyPlan() {
+        setIsGeneratingPlan(true);
+        setPlanError(null);
+        
+        try {
+            const res = await fetch(`http://127.0.0.1:8000/agent/plan?courseID=${id}`, {
+                method: "POST",
+            });
+            
+            if (!res.ok) {
+                const errorData = await res.json();
+                throw new Error(errorData.detail || "Failed to generate plan");
+            }
+            
+            const data = await res.json();
+            setStudyPlan(data);
+            setShowPlanModal(true);
+        } catch (err) {
+            console.error("Error generating study plan:", err);
+            setPlanError(err.message);
+        } finally {
+            setIsGeneratingPlan(false);
+        }
     }
 
     return (
@@ -220,7 +251,24 @@ function CourseCard({
                     <Pencil size={14} />
                     Edit
                 </button>
+                <button
+                    className={styles.btnGeneratePlan}
+                    onClick={handleGenerateStudyPlan}
+                    disabled={isGeneratingPlan}
+                >
+                    {isGeneratingPlan ? <Loader2 size={14} className={styles.spin} /> : <Calendar size={14} />}
+                    {isGeneratingPlan ? "Generating..." : "Generate Plan"}
+                </button>
             </div>
+            
+            {planError && <p className={styles.topicDesc} style={{color: 'var(--rose)', marginTop: '10px'}}>{planError}</p>}
+            
+            <StudyPlanModal 
+                show={showPlanModal}
+                plan={studyPlan}
+                onClose={() => setShowPlanModal(false)}
+                courseTitle={title}
+            />
         </motion.div>
     );
 }

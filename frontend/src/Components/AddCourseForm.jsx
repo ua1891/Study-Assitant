@@ -77,6 +77,8 @@ function AddCourseForm({ onAdd, onUpdate, onClose, initialData }) {
         exit={{ opacity: 0, y: -20 }}
         transition={{ duration: 0.3 }}
       >
+        <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: "300px", height: "300px", background: "var(--accent-glow)", filter: "blur(100px)", zIndex: -1, borderRadius: "50%", opacity: 0.6 }} />
+        
         <h3 className={styles.formTitle}>
           {initialData ? "Edit Course" : "Add New Course"}
         </h3>

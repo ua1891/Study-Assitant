@@ -2,9 +2,10 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus } from "lucide-react";
 import CourseCard from "../Components/CourseCard";
-import Header from "../Components/Header";
+import Search from "../Components/Search";
 import AddCourseForm from "../Components/AddCourseForm";
 import Popup from "../Components/Popup";
+import robotImg from "../assets/robot.png";
 
 function CoursesPage() {
   const [courses, setCourses] = useState([]);
@@ -33,12 +34,24 @@ function CoursesPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [showNotFoundPopup, setShowNotFoundPopup] = useState(false);
 
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 3;
+
   // Filter courses by title (case-insensitive partial match)
   const filteredCourses = searchQuery.trim()
     ? courses.filter((course) =>
         course.title.toLowerCase().includes(searchQuery.trim().toLowerCase())
       )
     : courses;
+
+  const totalPages = Math.ceil(filteredCourses.length / itemsPerPage);
+  const currentCourses = filteredCourses.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
+  // Reset page to 1 when search query changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery]);
 
   // Show "Not Found" popup when search has no results
   useEffect(() => {
@@ -91,6 +104,7 @@ function CoursesPage() {
   function handleEdit(course) {
     setEditingCourse(course);
     setShowForm(true);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   function handleUpdate(courseData) {
@@ -119,27 +133,50 @@ function CoursesPage() {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4 }}
     >
-      <Header searchQuery={searchQuery} onSearchChange={setSearchQuery} />
       
+      <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between", margin: "60px 0 80px", gap: "40px", position: "relative" }}>
+        {/* Glow behind */}
+        <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: "400px", height: "400px", background: "var(--accent-glow)", filter: "blur(120px)", zIndex: -1, borderRadius: "50%" }} />
+
+        <div style={{ flex: 1, textAlign: "left" }}>
+          <h1 style={{ fontSize: "3.2rem", fontWeight: "800", margin: "0 0 16px 0", background: "linear-gradient(90deg, #fff 20%, var(--accent) 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", lineHeight: 1.15, letterSpacing: "-0.02em" }}>
+            Study Assistant AI <br/> Supercharge your prep.
+          </h1>
+          <p style={{ maxWidth: "500px", color: "var(--text-secondary)", fontSize: "1.15rem", marginBottom: "32px", lineHeight: 1.6 }}>
+            Upload your materials, generate intelligent study plans, and master your exams faster. The ultimate AI-powered workspace for serious learners.
+          </p>
+          <AnimatePresence mode="wait">
+            {!showForm && (
+              <motion.div
+                key="addButton"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, height: 0 }}
+                style={{ display: "flex", gap: "20px", alignItems: "center" }}
+              >
+                <button className="addCourseBtn" style={{ margin: 0, padding: "11px 28px", fontSize: "1rem" }} onClick={() => setShowForm(true)}>
+                  <Plus size={20} />
+                  Add New Course
+                </button>
+                <Search searchQuery={searchQuery} onSearchChange={setSearchQuery} />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        <motion.div 
+          style={{ flex: 1, display: "flex", justifyContent: "flex-end" }}
+          animate={{ y: [0, -15, 0] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <img src={robotImg} alt="Study Assistant AI" style={{ width: "320px", height: "320px", objectFit: "cover", borderRadius: "32px", boxShadow: "0 10px 50px rgba(57, 255, 20, 0.2)", border: "1px solid rgba(57, 255, 20, 0.3)" }} />
+        </motion.div>
+      </div>
+
       <div style={{ padding: "0 0 60px" }}>
         <AnimatePresence mode="wait">
-          {!showForm && (
-            <motion.div
-              key="addButton"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              style={{ overflow: "hidden" }}
-            >
-              <button className="addCourseBtn" onClick={() => setShowForm(true)}>
-                <Plus size={18} />
-                Add New Course
-              </button>
-            </motion.div>
-          )}
-
           {showForm && (
-            <motion.div key="form">
+            <motion.div key="form" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} style={{ overflow: "hidden", marginBottom: "40px" }}>
               <AddCourseForm
                 onAdd={handleAdd}
                 onUpdate={handleUpdate}
@@ -174,7 +211,7 @@ function CoursesPage() {
                 </motion.div>
               ))
             ) : (
-              filteredCourses.map((course) => (
+              currentCourses.map((course) => (
                 <CourseCard
                   key={course.id}
                   id={course.id}
@@ -189,6 +226,29 @@ function CoursesPage() {
             )}
           </AnimatePresence>
         </div>
+
+        {totalPages > 1 && !loading && (
+          <div style={{ display: "flex", justifyContent: "center", gap: "8px", marginTop: "40px" }}>
+            {Array.from({ length: totalPages }).map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentPage(index + 1)}
+                style={{
+                  padding: "8px 16px",
+                  borderRadius: "var(--radius-sm)",
+                  background: currentPage === index + 1 ? "var(--accent)" : "rgba(255, 255, 255, 0.05)",
+                  color: currentPage === index + 1 ? "#0a0a0a" : "var(--text-secondary)",
+                  border: currentPage === index + 1 ? "none" : "1px solid var(--border)",
+                  cursor: "pointer",
+                  fontWeight: "600",
+                  transition: "all 0.2s ease"
+                }}
+              >
+                {index + 1}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
 
       <Popup

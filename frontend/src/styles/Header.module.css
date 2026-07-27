@@ -2,29 +2,30 @@
   position: relative;
   overflow: hidden;
   text-align: center;
-  padding: 80px 20px 60px;
+  padding: 40px 20px 30px;
   background: var(--bg-base);
   font-family: var(--font-heading);
   color: var(--text-primary);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 /* ── Decorative Orbs ──────────────────────────────────────────── */
 .orb1, .orb2, .orb3 {
   position: absolute;
   border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.1;
+  filter: blur(100px);
+  opacity: 0.15;
   z-index: 0;
   pointer-events: none;
   animation: float 10s ease-in-out infinite;
 }
 
 .orb1 {
-  width: 280px;
-  height: 280px;
+  width: 300px;
+  height: 100px;
   background: var(--accent);
-  top: -60px;
-  left: -40px;
+  top: 0;
+  left: 20%;
 }
 
 .orb2 {

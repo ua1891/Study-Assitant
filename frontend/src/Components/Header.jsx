@@ -10,22 +10,26 @@ function Header({ searchQuery, onSearchChange }) {
       <div className={styles.orb2} />
       <div className={styles.orb3} />
 
-      <motion.h1
-        className={styles.h1}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-      >
-        Study Assistant
-      </motion.h1>
-      <motion.p
-        className={styles.p}
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}
-      >
-        Your AI-powered study companion — organize courses, summarize notes, and master your subjects faster.
-      </motion.p>
+      {searchQuery === undefined && (
+        <>
+          <motion.h1
+            className={styles.h1}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          >
+            Study Assistant AI
+          </motion.h1>
+          <motion.p
+            className={styles.p}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}
+          >
+            Your AI-powered study companion — organize courses, summarize notes, and master your subjects faster.
+          </motion.p>
+        </>
+      )}
 
       {searchQuery !== undefined && (
         <motion.div

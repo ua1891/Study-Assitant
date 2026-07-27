@@ -1,12 +1,13 @@
 from pydantic_ai import Agent, PromptedOutput
-from pydantic_ai.models.openai import OpenAIChatModel
-from pydantic_ai.providers.openai import OpenAIProvider
+from pydantic_ai.models.google import GoogleModel
 from schemas.AgentSchema import NotesSummary
+from dotenv import load_dotenv
+import os
 
-model = OpenAIChatModel(
-    model_name="gemma3",
-    provider=OpenAIProvider(base_url="http://localhost:11434/v1", api_key="ollama"),
-)
+load_dotenv()
+os.environ["GOOGLE_API_KEY"] = os.getenv("Gemini_Key", "")
+
+model = GoogleModel('gemini-3.5-flash-lite')
 Summarize_Notes=Agent(
     model,
     output_type=PromptedOutput(NotesSummary),

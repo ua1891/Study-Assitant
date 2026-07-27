@@ -18,6 +18,8 @@ app.add_middleware(
 app.include_router(Courses.router)
 app.include_router(Topic.router)
 app.include_router(Notes.router)
+app.include_router(Notes.notes_crud_router)
+
 
 @app.get("/")
 async def root():

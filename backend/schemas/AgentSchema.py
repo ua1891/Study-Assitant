@@ -17,7 +17,6 @@ class StudyPlan(BaseModel):
 #for Q&A section        
 class AskInput(BaseModel):
     question: str
-    notes: list[str]
 
 class AskAnswer(BaseModel):
     answer: str

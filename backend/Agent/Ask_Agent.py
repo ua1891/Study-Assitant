@@ -2,10 +2,11 @@ from dataclasses import dataclass, field
 from schemas.AgentSchema import AskAnswer
 from pydantic_ai import Agent, RunContext, PromptedOutput
 from pydantic_ai.models.google import GoogleModel
-from dotenv import Gemini_key
-
+from dotenv import load_dotenv
 import os
-os.environ["GEMINI_API_KEY"] = "Gemini_key"
+
+load_dotenv()
+os.environ["GOOGLE_API_KEY"] = os.getenv("Gemini_Key", "")
 
 
 model = GoogleModel('gemini-3.5-flash')

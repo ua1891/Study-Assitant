@@ -1,11 +1,20 @@
-from Agent.Study_Agent import Prepare_Study_Plan
+from Agent.Ask_Agent import Ask_Notes, AskDeps
 
-prompt_text = (
-    "Course: Prompt Engineering\n"
-    "Today's date: 2026-07-22\n"
-    "Deadline: 2026-08-06 09:29:06\n"
-    "Topics to cover: Intro, Improve existing Prompt"
-)
+notes = [
+    "React uses a virtual DOM to optimize rendering performance.",
+    "FastAPI uses Pydantic models for request validation.",
+]
 
-result = Prepare_Study_Plan.run_sync(prompt_text)
-print(result.output)
+# Should find a match -> used_notes should end up True
+deps1 = AskDeps(notes=notes)
+r1 = Ask_Notes.run_sync("What does React use for performance?", deps=deps1)
+print("Q1 answer:", r1.output.answer)
+print("Q1 used_notes:", r1.output.used_notes)
+print("Q1 found_matches:", deps1.found_matches)
+
+# Should find nothing -> should fall back to general knowledge, but stay on-topic
+deps2 = AskDeps(notes=notes)
+r2 = Ask_Notes.run_sync("What is MongoDB used for?", deps=deps2)
+print("Q2 answer:", r2.output.answer)
+print("Q2 used_notes:", r2.output.used_notes)
+print("Q2 found_matches:", deps2.found_matches)

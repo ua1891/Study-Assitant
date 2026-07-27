@@ -22,22 +22,24 @@
   gap: 8px;
   margin: 24px auto 8px;
   padding: 12px 28px;
-  background: var(--bg-surface);
+  background: rgba(30, 40, 30, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   color: var(--text-primary);
-  border: 1px solid var(--border);
+  border: 1px solid rgba(57, 255, 20, 0.3);
   border-radius: var(--radius-full);
   font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;
   letter-spacing: 0.02em;
-  box-shadow: var(--card-shadow);
-  transition: all 0.2s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(57, 255, 20, 0.05);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .addCourseBtn:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--card-shadow-hover);
-  border-color: var(--accent);
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 8px 25px rgba(57, 255, 20, 0.25), inset 0 0 15px rgba(57, 255, 20, 0.2);
+  border-color: rgba(57, 255, 20, 0.8);
   color: var(--accent);
 }
 

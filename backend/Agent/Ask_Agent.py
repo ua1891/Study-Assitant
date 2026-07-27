@@ -8,8 +8,7 @@ import os
 load_dotenv()
 os.environ["GOOGLE_API_KEY"] = os.getenv("Gemini_Key", "")
 
-
-model = GoogleModel('gemini-3.5-flash')
+model = GoogleModel('gemini-3.5-flash-lite')
 
 @dataclass
 class AskDeps:

@@ -1,11 +1,12 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Calendar } from "lucide-react";
+import { createPortal } from "react-dom";
 import styles from "../styles/StudyPlanModal.module.css";
 
 function StudyPlanModal({ show, plan, onClose, courseTitle }) {
   if (!plan) return null;
 
-  return (
+  return createPortal(
     <AnimatePresence>
       {show && (
         <motion.div
@@ -52,7 +53,8 @@ function StudyPlanModal({ show, plan, onClose, courseTitle }) {
           </motion.div>
         </motion.div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 }
 

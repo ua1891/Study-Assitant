@@ -157,7 +157,8 @@ function NotesPage() {
             <Header />
 
             <div className={styles.pageWrapper}>
-                <div className={styles.pageHeader}>
+                <div className={styles.pageHeader} style={{ position: "relative", zIndex: 1 }}>
+                    <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: "400px", height: "150px", background: "var(--teal-glow)", filter: "blur(80px)", zIndex: -1, borderRadius: "50%", opacity: 0.5 }} />
                     <h2 className={styles.pageTitle}>AI Notes</h2>
                     <p className={styles.pageSubtitle}>
                         Save your study materials, generate summaries, and ask questions

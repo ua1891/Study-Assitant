@@ -12,10 +12,13 @@
 }
 
 .pageTitle {
-  font-size: 2.2rem;
+  font-size: 2.8rem;
   font-weight: 800;
-  color: var(--text-primary);
-  margin-bottom: 8px;
+  background: linear-gradient(90deg, #fff 20%, var(--teal) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
 }
 
 .pageSubtitle {
@@ -38,11 +41,22 @@
 
 /* ─── Shared Card Styles ─────────────────────────────────────────────── */
 .card, .askCard {
-  background: var(--bg-surface);
-  border: 1px solid var(--border);
+  background: rgba(20, 25, 20, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: var(--radius-lg);
-  padding: 24px;
-  box-shadow: var(--card-shadow);
+  padding: 32px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover, .askCard:hover {
+  border-color: rgba(45, 212, 191, 0.3);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(45, 212, 191, 0.05);
+  transform: translateY(-4px);
 }
 
 .cardTitle, .askCardTitle {
@@ -106,26 +120,31 @@
 }
 
 .btnSummarize {
-  background: var(--teal-glow);
+  background: linear-gradient(135deg, rgba(45, 212, 191, 0.15), rgba(45, 212, 191, 0.05));
   color: var(--teal);
-  border: 1px solid rgba(45, 212, 191, 0.2);
+  border: 1px solid rgba(45, 212, 191, 0.3);
+  box-shadow: inset 0 0 10px rgba(45, 212, 191, 0.1);
 }
 
 .btnSummarize:hover:not(:disabled) {
-  background: rgba(45, 212, 191, 0.2);
-  transform: translateY(-1px);
+  background: linear-gradient(135deg, rgba(45, 212, 191, 0.25), rgba(45, 212, 191, 0.1));
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(45, 212, 191, 0.2), inset 0 0 15px rgba(45, 212, 191, 0.2);
+  border-color: rgba(45, 212, 191, 0.6);
 }
 
 .btnSave {
-  background: var(--bg-elevated);
+  background: rgba(255, 255, 255, 0.03);
   color: var(--text-primary);
-  border: 1px solid var(--border);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .btnSave:hover:not(:disabled) {
-  background: var(--bg-surface-hover);
+  background: rgba(255, 255, 255, 0.08);
   border-color: var(--accent);
-  transform: translateY(-1px);
+  color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(57, 255, 20, 0.15);
 }
 
 .btnSummarize:disabled, .btnSave:disabled {
@@ -311,20 +330,23 @@
 }
 
 .savedItem {
-  background: var(--bg-surface);
-  border: 1px solid var(--border);
+  background: rgba(20, 25, 20, 0.5);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: var(--radius-md);
-  padding: 16px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: 16px;
-  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .savedItem:hover {
-  transform: translateY(-2px);
-  border-color: var(--border-focus);
+  transform: translateY(-6px) scale(1.02);
+  border-color: rgba(57, 255, 20, 0.4);
+  box-shadow: 0 12px 30px rgba(57, 255, 20, 0.15), inset 0 0 15px rgba(57, 255, 20, 0.05);
 }
 
 .savedItemText {

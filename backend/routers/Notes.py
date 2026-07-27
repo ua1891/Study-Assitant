@@ -5,6 +5,11 @@ from schemas.AgentSchema import StudyPlan, StudySession, NotesInput, NotesSummar
 from datetime import date
 from data.CoursesQueries import GetCourseByID
 from data.TopicsQueries import GetTopicsByCourseID
+from data.NotesQueries import Insert_Note, GetAllNotes, DeleteNote
+from schemas.NotesSchema import NoteCreate, NoteResponse
+from Agent.Ask_Agent import Ask_Notes, AskDeps
+from schemas.AgentSchema import AskAnswer, AskInput
+
 
 router = APIRouter(prefix="/agent", tags=["Agent"])
 
@@ -37,3 +42,35 @@ def generate_Study_plan(courseID: str):
         return result.output
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"AI service error: {e}")
+@router.post("/ask", response_model=AskAnswer)
+def ask_notes(payload: AskInput):
+    try:
+        all_notes = GetAllNotes()
+        note_texts = [n["text"] for n in all_notes]
+
+        deps = AskDeps(notes=note_texts)
+        result = Ask_Notes.run_sync(
+            payload.question,
+            deps=deps,
+        )
+        return result.output
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"AI service error: {e}")
+
+#writing quries for  saving and getting the notes which student paste in box for saving it in db and the on 
+# server side model get them and process them
+notes_crud_router = APIRouter(prefix="/notes", tags=["Notes CRUD"])
+
+@notes_crud_router.post("/")
+def create_note(note: NoteCreate):
+    note_id = Insert_Note(note.model_dump())
+    return {"id": note_id}
+
+@notes_crud_router.get("/")
+def get_notes():
+    return GetAllNotes()
+
+@notes_crud_router.delete("/{note_id}")
+def delete_note(note_id: str):
+    DeleteNote(note_id)
+    return {"deleted": True}    

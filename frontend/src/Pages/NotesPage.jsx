@@ -17,47 +17,80 @@ const API_BASE = "http://127.0.0.1:8000";
 function NotesPage() {
     // ── Draft note + AI summary ──
     const [noteText, setNoteText] = useState("");
-    const [savedNotes, setSavedNotes] = useState([]);
+    const [savedNotes, setSavedNotes] = useState([]); // [{ id, text, created_at }]
+    const [isLoadingNotes, setIsLoadingNotes] = useState(true);
 
-    const [summaryPoints, setSummaryPoints] = useState([]); // keypoints[]
-    const [summaryExplanation, setSummaryExplanation] = useState(""); // explanation
+    const [summaryPoints, setSummaryPoints] = useState([]);
+    const [summaryExplanation, setSummaryExplanation] = useState("");
     const [isSummarizing, setIsSummarizing] = useState(false);
     const [summarizeError, setSummarizeError] = useState("");
 
     // ── Ask my notes ──
     const [question, setQuestion] = useState("");
     const [answer, setAnswer] = useState("");
+    const [usedNotes, setUsedNotes] = useState(false);
     const [isAsking, setIsAsking] = useState(false);
     const [askError, setAskError] = useState("");
 
-    // ── Load / persist saved notes ──
+    // ── Load saved notes from the real backend on mount ──
     useEffect(() => {
-        const stored = localStorage.getItem("studyAssistantNotes");
-        if (stored) {
-            setSavedNotes(JSON.parse(stored));
-        }
+        fetchNotes();
     }, []);
 
-    useEffect(() => {
-        localStorage.setItem("studyAssistantNotes", JSON.stringify(savedNotes));
-    }, [savedNotes]);
+    function fetchNotes() {
+        setIsLoadingNotes(true);
+        fetch(`${API_BASE}/notes/`)
+            .then((res) => {
+                if (!res.ok) throw new Error("Failed to load notes");
+                return res.json();
+            })
+            .then((data) => {
+                setSavedNotes(data || []);
+                setIsLoadingNotes(false);
+            })
+            .catch((err) => {
+                console.error("Error loading notes:", err);
+                setIsLoadingNotes(false);
+            });
+    }
 
+    // ── Save a note to the database ──
     function handleSaveNote() {
         if (!noteText.trim()) return;
-        setSavedNotes((prev) => [
-            { id: Date.now(), text: noteText.trim() },
-            ...prev,
-        ]);
-        setNoteText("");
-        setSummaryPoints([]);
-        setSummaryExplanation("");
+
+        fetch(`${API_BASE}/notes/`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ text: noteText.trim() }),
+        })
+            .then((res) => {
+                if (!res.ok) throw new Error("Failed to save note");
+                return res.json();
+            })
+            .then(() => {
+                setNoteText("");
+                setSummaryPoints([]);
+                setSummaryExplanation("");
+                fetchNotes(); // refresh the saved list from the DB
+            })
+            .catch((err) => {
+                console.error("Error saving note:", err);
+            });
     }
 
+    // ── Delete a note from the database ──
     function handleDeleteNote(id) {
-        setSavedNotes((prev) => prev.filter((note) => note.id !== id));
+        fetch(`${API_BASE}/notes/${id}`, { method: "DELETE" })
+            .then((res) => {
+                if (!res.ok) throw new Error("Failed to delete note");
+                setSavedNotes((prev) => prev.filter((note) => note.id !== id));
+            })
+            .catch((err) => {
+                console.error("Error deleting note:", err);
+            });
     }
 
-    // ── Summarize (wired to the real Pydantic AI / gemma3 endpoint) ──
+    // ── Summarize (Pydantic AI / Gemini via /agent/summarize) ──
     function handleSummarize() {
         if (!noteText.trim()) return;
         setIsSummarizing(true);
@@ -75,31 +108,29 @@ function NotesPage() {
                 return res.json();
             })
             .then((data) => {
-                // Real shape: { text, explanation, keypoints }
                 setSummaryExplanation(data.explanation || "");
                 setSummaryPoints(data.keypoints || []);
                 setIsSummarizing(false);
             })
             .catch((err) => {
                 console.error("Error summarizing note:", err);
-                setSummarizeError("Couldn't summarize right now. Is the backend/Ollama running?");
+                setSummarizeError("Couldn't summarize right now. Is the backend running?");
                 setIsSummarizing(false);
             });
     }
 
-    // ── Ask my notes (endpoint not built yet — see Week 5 tool-use step) ──
+    // ── Ask my notes (real tool-using agent via /agent/ask) ──
     function handleAskQuestion() {
         if (!question.trim()) return;
         setIsAsking(true);
         setAskError("");
         setAnswer("");
-
-        const allNoteTexts = savedNotes.map((n) => n.text).join("\n\n");
+        setUsedNotes(false);
 
         fetch(`${API_BASE}/agent/ask`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ question, context: allNoteTexts }),
+            body: JSON.stringify({ question }),
         })
             .then((res) => {
                 if (!res.ok) throw new Error("Ask request failed");
@@ -107,11 +138,12 @@ function NotesPage() {
             })
             .then((data) => {
                 setAnswer(data.answer || "No answer found.");
+                setUsedNotes(Boolean(data.used_notes));
                 setIsAsking(false);
             })
             .catch((err) => {
                 console.error("Error asking question:", err);
-                setAskError("This feature isn't wired up on the backend yet.");
+                setAskError("Couldn't get an answer right now.");
                 setIsAsking(false);
             });
     }
@@ -128,7 +160,8 @@ function NotesPage() {
                 <div className={styles.pageHeader}>
                     <h2 className={styles.pageTitle}>AI Notes</h2>
                     <p className={styles.pageSubtitle}>
-                        Paste your study materials, generate summaries, and chat with your notes.
+                        Save your study materials, generate summaries, and ask questions
+                        grounded in your own notes.
                     </p>
                 </div>
 
@@ -172,7 +205,6 @@ function NotesPage() {
                             </p>
                         )}
 
-                        {/* AI Summary Output */}
                         {(isSummarizing || summaryPoints.length > 0) && (
                             <motion.div
                                 className={styles.summarySection}
@@ -226,18 +258,19 @@ function NotesPage() {
                     <div className={styles.askCard}>
                         <h3 className={styles.askCardTitle}>
                             <MessageCircle size={18} />
-                            Chat with your Notes
+                            Ask My Notes
                         </h3>
 
                         <p className={styles.askLabel}>
-                            Ask a question based on your saved notes below.
+                            Ask a question — answered from your saved notes when possible,
+                            or general knowledge otherwise.
                         </p>
 
                         <div className={styles.askInputWrapper}>
                             <input
                                 type="text"
                                 className={styles.askInput}
-                                placeholder="e.g. What are the key concepts of thermodynamics?"
+                                placeholder="e.g. What does useEffect do in React?"
                                 value={question}
                                 onChange={(e) => setQuestion(e.target.value)}
                                 onKeyDown={(e) => e.key === "Enter" && handleAskQuestion()}
@@ -245,7 +278,7 @@ function NotesPage() {
                             <button
                                 className={styles.btnAsk}
                                 onClick={handleAskQuestion}
-                                disabled={isAsking || !question.trim() || savedNotes.length === 0}
+                                disabled={isAsking || !question.trim()}
                             >
                                 {isAsking ? <div className={styles.spinner} /> : <Send size={16} />}
                             </button>
@@ -257,7 +290,6 @@ function NotesPage() {
                             </p>
                         )}
 
-                        {/* Answer Box */}
                         <AnimatePresence>
                             {answer && (
                                 <motion.div
@@ -268,7 +300,10 @@ function NotesPage() {
                                 >
                                     <div className={styles.answerContent}>{answer}</div>
                                     <p className={styles.answerSource}>
-                                        <CheckCircle2 size={12} /> Answered from your saved notes
+                                        <CheckCircle2 size={12} />
+                                        {usedNotes
+                                            ? "Answered from your saved notes"
+                                            : "Answered from general knowledge"}
                                     </p>
                                 </motion.div>
                             )}
@@ -276,8 +311,8 @@ function NotesPage() {
                     </div>
                 </div>
 
-                {/* ── Saved Notes List ── */}
-                {savedNotes.length > 0 && (
+                {/* ── Saved Notes List (from the real database) ── */}
+                {!isLoadingNotes && savedNotes.length > 0 && (
                     <div className={styles.savedSection}>
                         <h3 className={styles.savedTitle}>
                             <Save size={18} />

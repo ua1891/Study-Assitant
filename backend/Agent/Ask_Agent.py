@@ -2,11 +2,13 @@ from dataclasses import dataclass, field
 from schemas.AgentSchema import AskAnswer
 from pydantic_ai import Agent, RunContext, PromptedOutput
 from pydantic_ai.models.google import GoogleModel
+from pathlib import Path
 from dotenv import load_dotenv
 import os
 
-load_dotenv()
-os.environ["GOOGLE_API_KEY"] = os.getenv("Gemini_Key", "")
+# Load .env from project root (two levels up from Agent/)
+env_path = Path(__file__).resolve().parent.parent.parent / ".env"
+load_dotenv(env_path)
 
 model = GoogleModel('gemini-3.5-flash-lite')
 

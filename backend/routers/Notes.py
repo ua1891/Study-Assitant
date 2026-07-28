@@ -27,6 +27,17 @@ def generate_Study_plan(courseID: str):
     if not course:
         raise HTTPException(status_code=404, detail="Course not found")
 
+    # Guard: reject plan generation if the deadline has already passed
+    raw_deadline = course.get("deadline")
+    if raw_deadline:
+        from datetime import datetime
+        deadline_date = raw_deadline if isinstance(raw_deadline, date) else datetime.fromisoformat(str(raw_deadline)).date()
+        if deadline_date < date.today():
+            raise HTTPException(
+                status_code=400,
+                detail="The deadline for this course has already passed. Please update the deadline to generate a plan."
+            )
+
     Topics = GetTopicsByCourseID(courseID)
     topic_titles = [t["title"] for t in Topics] or ["General review"]
 

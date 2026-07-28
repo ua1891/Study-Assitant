@@ -38,7 +38,7 @@ function AddCourseForm({ onAdd, onUpdate, onClose, initialData }) {
     }));
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
     if (!formData.title.trim() || !formData.description.trim() || !formData.duration.trim() || !formData.rating.trim()) {
@@ -51,20 +51,29 @@ function AddCourseForm({ onAdd, onUpdate, onClose, initialData }) {
       return;
     }
 
-    if (initialData) {
-      onUpdate(formData);
-    } else {
-      onAdd(formData);
+    try {
+      if (initialData) {
+        await onUpdate(formData);
+      } else {
+        await onAdd(formData);
+      }
+
+      setFormData({ title: "", description: "", duration: "", rating: "" });
+
+      setPopup({
+        show: true,
+        title: "Success",
+        message: initialData ? "Course updated successfully!" : "Course added successfully!",
+        type: "success",
+      });
+    } catch (error) {
+      setPopup({
+        show: true,
+        title: "Error",
+        message: "Failed to save course. Please try again.",
+        type: "error",
+      });
     }
-
-    setFormData({ title: "", description: "", duration: "", rating: "" });
-
-    setPopup({
-      show: true,
-      title: "Success",
-      message: initialData ? "Course updated successfully!" : "Course added successfully!",
-      type: "success",
-    });
   }
 
   return (

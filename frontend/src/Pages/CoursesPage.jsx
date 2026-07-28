@@ -89,16 +89,18 @@ function CoursesPage() {
   }
 
   function handleAdd(courseData) {
-    fetch("https://study-assitant.onrender.com/courses/addCourse", {
+    return fetch("https://study-assitant.onrender.com/courses/addCourse", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(courseData),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to add course");
+        return res.json();
+      })
       .then((data) => {
         setCourses((prev) => [...prev, data]);
-      })
-      .catch((error) => console.error("Error adding course:", error));
+      });
   }
 
   function handleEdit(course) {
@@ -108,18 +110,20 @@ function CoursesPage() {
   }
 
   function handleUpdate(courseData) {
-    fetch(`https://study-assitant.onrender.com/courses/updateCourse/${editingCourse.id}`, {
+    return fetch(`https://study-assitant.onrender.com/courses/updateCourse/${editingCourse.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id: editingCourse.id, ...courseData }),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to update course");
+        return res.json();
+      })
       .then((updatedCourse) => {
         setCourses((prev) =>
           prev.map((c) => (c.id === updatedCourse.id ? updatedCourse : c))
         );
-      })
-      .catch((error) => console.error("Error updating course:", error));
+      });
   }
 
   function closeForm() {

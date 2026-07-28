@@ -36,7 +36,12 @@ def generate_Study_plan(courseID: str):
     raw_deadline = course.get("deadline")
     if raw_deadline:
         from datetime import datetime
-        deadline_date = raw_deadline if isinstance(raw_deadline, date) else datetime.fromisoformat(str(raw_deadline)).date()
+        if isinstance(raw_deadline, datetime):
+            deadline_date = raw_deadline.date()
+        elif isinstance(raw_deadline, date):
+            deadline_date = raw_deadline
+        else:
+            deadline_date = datetime.fromisoformat(str(raw_deadline)).date()
         if deadline_date < date.today():
             raise HTTPException(
                 status_code=400,

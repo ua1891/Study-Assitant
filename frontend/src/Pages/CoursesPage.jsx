@@ -12,7 +12,7 @@ function CoursesPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/courses/")
+    fetch("https://study-assitant.onrender.com/courses/")
       .then((res) => res.json())
       .then((data) => {
         setCourses(data);
@@ -68,7 +68,7 @@ function CoursesPage() {
   }
 
   function confirmDelete() {
-    fetch(`http://127.0.0.1:8000/courses/deleteCourse/${courseToDelete}`, {
+    fetch(`https://study-assitant.onrender.com/courses/deleteCourse/${courseToDelete}`, {
       method: "DELETE",
     })
       .then((res) => {
@@ -89,7 +89,7 @@ function CoursesPage() {
   }
 
   function handleAdd(courseData) {
-    fetch("http://127.0.0.1:8000/courses/addCourse", {
+    fetch("https://study-assitant.onrender.com/courses/addCourse", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(courseData),
@@ -108,7 +108,7 @@ function CoursesPage() {
   }
 
   function handleUpdate(courseData) {
-    fetch(`http://127.0.0.1:8000/courses/updateCourse/${editingCourse.id}`, {
+    fetch(`https://study-assitant.onrender.com/courses/updateCourse/${editingCourse.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id: editingCourse.id, ...courseData }),

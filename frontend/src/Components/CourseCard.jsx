@@ -25,7 +25,7 @@ function CourseCard({
     const [showPlanModal, setShowPlanModal] = useState(false);
 
     useEffect(() => {
-        fetch(`http://127.0.0.1:8000/topics/course/${id}`)
+        fetch(`https://study-assitant.onrender.com/topics/course/${id}`)
             .then(async (res) => {
                 if (!res.ok) {
                     console.log("No topics found for this course.");
@@ -48,7 +48,7 @@ function CourseCard({
 
         if (!newTopicTitle.trim() || !newTopicDesc.trim()) return;
 
-        fetch("http://127.0.0.1:8000/topics/addTopic", {
+        fetch("https://study-assitant.onrender.com/topics/addTopic", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -82,7 +82,7 @@ function CourseCard({
     }
 
     function handleDeleteTopic(topicId) {
-        fetch(`http://127.0.0.1:8000/topics/deleteTopic/${topicId}`, {
+        fetch(`https://study-assitant.onrender.com/topics/deleteTopic/${topicId}`, {
             method: "DELETE",
         })
             .then(async (res) => {
@@ -107,7 +107,7 @@ function CourseCard({
         setPlanError(null);
         
         try {
-            const res = await fetch(`http://127.0.0.1:8000/agent/plan?courseID=${id}`, {
+            const res = await fetch(`https://study-assitant.onrender.com/agent/plan?courseID=${id}`, {
                 method: "POST",
             });
             

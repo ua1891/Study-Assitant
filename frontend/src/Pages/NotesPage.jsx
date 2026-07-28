@@ -12,7 +12,7 @@ import {
 import Header from "../Components/Header";
 import styles from "../styles/NotesPage.module.css";
 
-const API_BASE = "http://127.0.0.1:8000";
+const API_BASE = "https://study-assitant.onrender.com";
 
 function NotesPage() {
     // ── Draft note + AI summary ──

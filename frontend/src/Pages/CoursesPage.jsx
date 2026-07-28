@@ -7,13 +7,14 @@ import AddCourseForm from "../Components/AddCourseForm";
 import Popup from "../Components/Popup";
 import robotImg from "../assets/robot.png";
 import styles from "../styles/CoursesPage.module.css";
+import { API_BASE } from "../config";
 
 function CoursesPage() {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("https://study-assitant.onrender.com/courses/")
+    fetch(`${API_BASE}/courses/`)
       .then((res) => res.json())
       .then((data) => {
         setCourses(data);
@@ -61,7 +62,7 @@ function CoursesPage() {
   }
 
   function confirmDelete() {
-    fetch(`https://study-assitant.onrender.com/courses/deleteCourse/${courseToDelete}`, {
+    fetch(`${API_BASE}/courses/deleteCourse/${courseToDelete}`, {
       method: "DELETE",
     })
       .then((res) => {
@@ -82,7 +83,7 @@ function CoursesPage() {
   }
 
   function handleAdd(courseData) {
-    return fetch("https://study-assitant.onrender.com/courses/addCourse", {
+    return fetch(`${API_BASE}/courses/addCourse`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(courseData),
@@ -103,7 +104,7 @@ function CoursesPage() {
   }
 
   function handleUpdate(courseData) {
-    return fetch(`https://study-assitant.onrender.com/courses/updateCourse/${editingCourse.id}`, {
+    return fetch(`${API_BASE}/courses/updateCourse/${editingCourse.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id: editingCourse.id, ...courseData }),

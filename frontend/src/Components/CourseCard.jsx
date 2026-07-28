@@ -4,6 +4,7 @@ import StudyPlanModal from "./StudyPlanModal";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Clock, Star, Heart, Trash2, Pencil, Calendar, Loader2 } from "lucide-react";
+import { API_BASE } from "../config";
 
 function CourseCard({
     id,
@@ -28,7 +29,7 @@ function CourseCard({
     const [topicError, setTopicError] = useState("");
 
     useEffect(() => {
-        fetch(`https://study-assitant.onrender.com/topics/course/${id}`)
+        fetch(`${API_BASE}/topics/course/${id}`)
             .then(async (res) => {
                 if (!res.ok) {
                     console.log("No topics found for this course.");
@@ -54,7 +55,7 @@ function CourseCard({
         setIsAddingTopic(true);
         setTopicError("");
 
-        fetch("https://study-assitant.onrender.com/topics/addTopic", {
+        fetch(`${API_BASE}/topics/addTopic`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -92,7 +93,7 @@ function CourseCard({
     }
 
     function handleDeleteTopic(topicId) {
-        fetch(`https://study-assitant.onrender.com/topics/deleteTopic/${topicId}`, {
+        fetch(`${API_BASE}/topics/deleteTopic/${topicId}`, {
             method: "DELETE",
         })
             .then(async (res) => {
@@ -117,7 +118,7 @@ function CourseCard({
         setPlanError(null);
         
         try {
-            const res = await fetch(`https://study-assitant.onrender.com/agent/plan?courseID=${id}`, {
+            const res = await fetch(`${API_BASE}/agent/plan?courseID=${id}`, {
                 method: "POST",
             });
             

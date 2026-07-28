@@ -17,12 +17,15 @@ app = FastAPI(
     description="This is a Study Assistant API that provides information about courses and allows users to manage their courses.",
     version="1.1.0"
 )
+
+# Allow dynamic CORS from environment, fallback to standard local/demo URLs
+frontend_url = os.environ.get("FRONTEND_URL", "https://study-assitant.vercel.app")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:5173",
         "http://127.0.0.1:5173",
-        "https://study-assitant.vercel.app"
+        frontend_url
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -32,7 +35,6 @@ app.include_router(Courses.router)
 app.include_router(Topic.router)
 app.include_router(Notes.router)
 app.include_router(Notes.notes_crud_router)
-
 
 @app.get("/")
 async def root():
@@ -47,3 +49,8 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
         status_code=422,
         content={"detail": f"{field.capitalize()}: {msg}" if field else msg}
     )
+
+if __name__ == "__main__":
+    import uvicorn
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port)

@@ -11,8 +11,7 @@ import {
 } from "lucide-react";
 import Header from "../Components/Header";
 import styles from "../styles/NotesPage.module.css";
-
-const API_BASE = "https://study-assitant.onrender.com";
+import { API_BASE } from "../config";
 
 function NotesPage() {
     // ── Draft note + AI summary ──

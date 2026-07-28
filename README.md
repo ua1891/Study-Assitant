@@ -48,10 +48,11 @@ The API will run at `http://localhost:8000`.
 In a new terminal window:
 ```bash
 cd frontend
+cp .env.example .env
 npm install
 npm run dev
 ```
-The React app will be available at `http://localhost:5173`.
+Make sure to check `frontend/.env` and update `VITE_API_BASE_URL` if your backend is running on a different port or server. The React app will be available at `http://localhost:5173`.
 
 ## Deployment
 
@@ -65,4 +66,5 @@ This repository includes a `render.yaml` file for Infrastructure-as-Code deploym
 1. Import the project into Vercel.
 2. Set the Framework Preset to **Vite**.
 3. Ensure the Root Directory is set to `frontend`.
-4. Deploy! No additional configuration is required.
+4. In the Vercel Dashboard, go to Settings -> Environment Variables and add `VITE_API_BASE_URL` pointing to your deployed Render backend (e.g., `https://your-backend.onrender.com`).
+5. Deploy!

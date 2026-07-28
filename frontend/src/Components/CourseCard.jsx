@@ -24,6 +24,9 @@ function CourseCard({
     const [planError, setPlanError] = useState(null);
     const [showPlanModal, setShowPlanModal] = useState(false);
 
+    const [isAddingTopic, setIsAddingTopic] = useState(false);
+    const [topicError, setTopicError] = useState("");
+
     useEffect(() => {
         fetch(`https://study-assitant.onrender.com/topics/course/${id}`)
             .then(async (res) => {
@@ -48,6 +51,9 @@ function CourseCard({
 
         if (!newTopicTitle.trim() || !newTopicDesc.trim()) return;
 
+        setIsAddingTopic(true);
+        setTopicError("");
+
         fetch("https://study-assitant.onrender.com/topics/addTopic", {
             method: "POST",
             headers: {
@@ -63,7 +69,7 @@ function CourseCard({
                 const data = await res.json();
 
                 if (!res.ok) {
-                    throw new Error(JSON.stringify(data));
+                    throw new Error(data.detail || JSON.stringify(data));
                 }
 
                 return data;
@@ -78,6 +84,10 @@ function CourseCard({
             })
             .catch((err) => {
                 console.error("Error adding topic:", err);
+                setTopicError(err.message);
+            })
+            .finally(() => {
+                setIsAddingTopic(false);
             });
     }
 
@@ -210,10 +220,12 @@ function CourseCard({
                         <button
                             type="submit"
                             className={styles.btnAddTopic}
+                            disabled={isAddingTopic}
                         >
-                            + Add Topic
+                            {isAddingTopic ? <Loader2 size={13} className={styles.spin} /> : "+ Add Topic"}
                         </button>
                     </form>
+                    {topicError && <p className={styles.topicDesc} style={{color: 'var(--rose)', marginTop: '5px'}}>{topicError}</p>}
                 </div>
             </ExplanationPanel>
 

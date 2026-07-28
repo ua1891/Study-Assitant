@@ -49,18 +49,10 @@ function CoursesPage() {
   const currentCourses = filteredCourses.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   // Reset page to 1 when search query changes
-  useEffect(() => {
+  function handleSearchChange(query) {
+    setSearchQuery(query);
     setCurrentPage(1);
-  }, [searchQuery]);
-
-  // Show "Not Found" popup when search has no results
-  useEffect(() => {
-    if (searchQuery.trim() && filteredCourses.length === 0 && !loading) {
-      setShowNotFoundPopup(true);
-    } else {
-      setShowNotFoundPopup(false);
-    }
-  }, [searchQuery, filteredCourses.length, loading]);
+  }
 
   function handleRemove(id) {
     setCourseToDelete(id);
@@ -162,7 +154,7 @@ function CoursesPage() {
                   <Plus size={20} />
                   Add New Course
                 </button>
-                <Search searchQuery={searchQuery} onSearchChange={setSearchQuery} />
+                <Search searchQuery={searchQuery} onSearchChange={handleSearchChange} />
               </motion.div>
             )}
           </AnimatePresence>
@@ -214,6 +206,20 @@ function CoursesPage() {
                   </div>
                 </motion.div>
               ))
+            ) : currentCourses.length === 0 ? (
+              <div style={{ gridColumn: "1 / -1", textAlign: "center", padding: "60px 0", color: "var(--text-secondary)" }}>
+                {searchQuery.trim() ? (
+                  <>
+                    <h3 style={{ fontSize: "1.5rem", color: "#fff", marginBottom: "8px" }}>No results found</h3>
+                    <p>We couldn't find any courses matching "{searchQuery}".</p>
+                  </>
+                ) : (
+                  <>
+                    <h3 style={{ fontSize: "1.5rem", color: "#fff", marginBottom: "8px" }}>No courses yet</h3>
+                    <p>Click "Add New Course" above to create your first course!</p>
+                  </>
+                )}
+              </div>
             ) : (
               currentCourses.map((course) => (
                 <CourseCard
@@ -265,14 +271,12 @@ function CoursesPage() {
       />
 
       <Popup
-        show={showNotFoundPopup}
-        title="No Results Found"
-        message={`We couldn't find any courses matching "${searchQuery}". Try a different keyword.`}
-        type="warning"
-        onClose={() => {
-          setShowNotFoundPopup(false);
-          setSearchQuery("");
-        }}
+        show={showDeletePopup}
+        title="Delete Course"
+        message="Are you sure you want to permanently delete this course? This action cannot be undone."
+        type="error"
+        onConfirm={confirmDelete}
+        onClose={cancelDelete}
       />
     </motion.div>
   );

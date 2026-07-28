@@ -1,22 +1,22 @@
 from typing import Optional
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from datetime import datetime
 
 class CreateCourse(BaseModel):
-    title: str
-    description: str
-    duration: str
-    rating: str
+    title: str = Field(..., min_length=1, max_length=150)
+    description: str = Field(..., min_length=1, max_length=1000)
+    duration: str = Field(..., min_length=1, max_length=50)
+    rating: str = Field(..., min_length=1, max_length=10)
     deadline: Optional[datetime] = None
 
 class CourseResponse(CreateCourse):
     id: str
 
 class UpdateCourse(BaseModel):
-    title: Optional[str] = None
-    description: Optional[str] = None
-    duration: Optional[str] = None
-    rating: Optional[str] = None
+    title: Optional[str] = Field(None, min_length=1, max_length=150)
+    description: Optional[str] = Field(None, min_length=1, max_length=1000)
+    duration: Optional[str] = Field(None, min_length=1, max_length=50)
+    rating: Optional[str] = Field(None, min_length=1, max_length=10)
     deadline: Optional[datetime] = None
 
 class DeleteCourse(BaseModel):

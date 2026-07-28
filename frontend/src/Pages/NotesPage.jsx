@@ -313,37 +313,45 @@ function NotesPage() {
                 </div>
 
                 {/* ── Saved Notes List (from the real database) ── */}
-                {!isLoadingNotes && savedNotes.length > 0 && (
+                {!isLoadingNotes && (
                     <div className={styles.savedSection}>
                         <h3 className={styles.savedTitle}>
                             <Save size={18} />
                             Saved Knowledge Base
                         </h3>
-                        <div className={styles.savedGrid}>
-                            <AnimatePresence>
-                                {savedNotes.map((note) => (
-                                    <motion.div
-                                        key={note.id}
-                                        className={styles.savedItem}
-                                        initial={{ opacity: 0, scale: 0.95 }}
-                                        animate={{ opacity: 1, scale: 1 }}
-                                        exit={{ opacity: 0, scale: 0.9 }}
-                                        layout
-                                    >
-                                        <p className={styles.savedItemText}>{note.text}</p>
-                                        <div className={styles.savedItemActions}>
-                                            <button
-                                                className={styles.btnDeleteNote}
-                                                onClick={() => handleDeleteNote(note.id)}
-                                                title="Delete Note"
-                                            >
-                                                <Trash2 size={16} />
-                                            </button>
-                                        </div>
-                                    </motion.div>
-                                ))}
-                            </AnimatePresence>
-                        </div>
+                        {savedNotes.length > 0 ? (
+                            <div className={styles.savedGrid}>
+                                <AnimatePresence>
+                                    {savedNotes.map((note) => (
+                                        <motion.div
+                                            key={note.id}
+                                            className={styles.savedItem}
+                                            initial={{ opacity: 0, scale: 0.95 }}
+                                            animate={{ opacity: 1, scale: 1 }}
+                                            exit={{ opacity: 0, scale: 0.9 }}
+                                            layout
+                                        >
+                                            <p className={styles.savedItemText}>{note.text}</p>
+                                            <div className={styles.savedItemActions}>
+                                                <button
+                                                    className={styles.btnDeleteNote}
+                                                    onClick={() => handleDeleteNote(note.id)}
+                                                    title="Delete Note"
+                                                >
+                                                    <Trash2 size={16} />
+                                                </button>
+                                            </div>
+                                        </motion.div>
+                                    ))}
+                                </AnimatePresence>
+                            </div>
+                        ) : (
+                            <div style={{ textAlign: "center", padding: "40px 0", color: "var(--text-secondary)", background: "rgba(255,255,255,0.02)", borderRadius: "var(--radius-lg)", border: "1px dashed rgba(255,255,255,0.1)", marginTop: "20px" }}>
+                                <FileText size={40} style={{ opacity: 0.5, marginBottom: "16px" }} />
+                                <h3 style={{ color: "#fff", marginBottom: "8px", fontSize: "1.2rem" }}>No notes saved yet</h3>
+                                <p>Draft a note above and click "Save Note" to build your knowledge base.</p>
+                            </div>
+                        )}
                     </div>
                 )}
             </div>

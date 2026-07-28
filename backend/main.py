@@ -6,7 +6,9 @@ from dotenv import load_dotenv
 env_path = Path(__file__).resolve().parent.parent / ".env"
 load_dotenv(env_path)
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from routers import Courses,Topic,Notes
 
@@ -35,3 +37,13 @@ app.include_router(Notes.notes_crud_router)
 @app.get("/")
 async def root():
     return {"message": "Welcome to the Study Assistant API!"}
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    error = exc.errors()[0]
+    field = error.get("loc", [""])[-1]
+    msg = error.get("msg", "Invalid input")
+    return JSONResponse(
+        status_code=422,
+        content={"detail": f"{field.capitalize()}: {msg}" if field else msg}
+    )

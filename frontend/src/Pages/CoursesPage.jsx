@@ -6,6 +6,7 @@ import Search from "../Components/Search";
 import AddCourseForm from "../Components/AddCourseForm";
 import Popup from "../Components/Popup";
 import robotImg from "../assets/robot.png";
+import styles from "../styles/CoursesPage.module.css";
 
 function CoursesPage() {
   const [courses, setCourses] = useState([]);
@@ -130,15 +131,15 @@ function CoursesPage() {
       transition={{ duration: 0.4 }}
     >
       
-      <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between", margin: "60px 0 80px", gap: "40px", position: "relative" }}>
+      <div className={styles.heroContainer}>
         {/* Glow behind */}
-        <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: "400px", height: "400px", background: "var(--accent-glow)", filter: "blur(120px)", zIndex: -1, borderRadius: "50%" }} />
+        <div className={styles.heroGlow} />
 
-        <div style={{ flex: 1, textAlign: "left" }}>
-          <h1 style={{ fontSize: "3.2rem", fontWeight: "800", margin: "0 0 16px 0", background: "linear-gradient(90deg, #fff 20%, var(--accent) 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", lineHeight: 1.15, letterSpacing: "-0.02em" }}>
+        <div className={styles.heroTextWrapper}>
+          <h1 className={styles.heroTitle}>
             Study Assistant AI <br/> Supercharge your prep.
           </h1>
-          <p style={{ maxWidth: "500px", color: "var(--text-secondary)", fontSize: "1.15rem", marginBottom: "32px", lineHeight: 1.6 }}>
+          <p className={styles.heroSubtitle}>
             Upload your materials, generate intelligent study plans, and master your exams faster. The ultimate AI-powered workspace for serious learners.
           </p>
           <AnimatePresence mode="wait">
@@ -148,9 +149,9 @@ function CoursesPage() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, height: 0 }}
-                style={{ display: "flex", gap: "20px", alignItems: "center" }}
+                className={styles.addCourseWrapper}
               >
-                <button className="addCourseBtn" style={{ margin: 0, padding: "11px 28px", fontSize: "1rem" }} onClick={() => setShowForm(true)}>
+                <button className={`addCourseBtn ${styles.addBtn}`} onClick={() => setShowForm(true)}>
                   <Plus size={20} />
                   Add New Course
                 </button>
@@ -161,15 +162,15 @@ function CoursesPage() {
         </div>
 
         <motion.div 
-          style={{ flex: 1, display: "flex", justifyContent: "flex-end" }}
+          className={styles.robotWrapper}
           animate={{ y: [0, -15, 0] }}
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
         >
-          <img src={robotImg} alt="Study Assistant AI" style={{ width: "320px", height: "320px", objectFit: "cover", borderRadius: "32px", boxShadow: "0 10px 50px rgba(57, 255, 20, 0.2)", border: "1px solid rgba(57, 255, 20, 0.3)" }} />
+          <img src={robotImg} alt="Study Assistant AI" className={styles.robotImg} />
         </motion.div>
       </div>
 
-      <div style={{ padding: "0 0 60px" }}>
+      <div className={styles.pageBottom}>
         <AnimatePresence mode="wait">
           {showForm && (
             <motion.div key="form" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} style={{ overflow: "hidden", marginBottom: "40px" }}>
@@ -207,15 +208,15 @@ function CoursesPage() {
                 </motion.div>
               ))
             ) : currentCourses.length === 0 ? (
-              <div style={{ gridColumn: "1 / -1", textAlign: "center", padding: "60px 0", color: "var(--text-secondary)" }}>
+              <div className={styles.emptyState}>
                 {searchQuery.trim() ? (
                   <>
-                    <h3 style={{ fontSize: "1.5rem", color: "#fff", marginBottom: "8px" }}>No results found</h3>
+                    <h3 className={styles.emptyTitle}>No results found</h3>
                     <p>We couldn't find any courses matching "{searchQuery}".</p>
                   </>
                 ) : (
                   <>
-                    <h3 style={{ fontSize: "1.5rem", color: "#fff", marginBottom: "8px" }}>No courses yet</h3>
+                    <h3 className={styles.emptyTitle}>No courses yet</h3>
                     <p>Click "Add New Course" above to create your first course!</p>
                   </>
                 )}
@@ -238,7 +239,7 @@ function CoursesPage() {
         </div>
 
         {totalPages > 1 && !loading && (
-          <div style={{ display: "flex", justifyContent: "center", gap: "8px", marginTop: "40px" }}>
+          <div className={styles.pagination}>
             {Array.from({ length: totalPages }).map((_, index) => (
               <button
                 key={index}
@@ -260,15 +261,6 @@ function CoursesPage() {
           </div>
         )}
       </div>
-
-      <Popup
-        show={showDeletePopup}
-        title="Delete Course"
-        message="Are you sure you want to permanently delete this course? This action cannot be undone."
-        type="error"
-        onConfirm={confirmDelete}
-        onClose={cancelDelete}
-      />
 
       <Popup
         show={showDeletePopup}

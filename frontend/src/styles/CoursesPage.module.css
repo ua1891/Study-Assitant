@@ -1,0 +1,131 @@
+.heroContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin: 60px 0 80px;
+  gap: 40px;
+  position: relative;
+}
+
+.heroGlow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  height: 400px;
+  background: var(--accent-glow);
+  filter: blur(120px);
+  z-index: -1;
+  border-radius: 50%;
+}
+
+.heroTextWrapper {
+  flex: 1;
+  text-align: left;
+}
+
+.heroTitle {
+  font-size: 3.2rem;
+  font-weight: 800;
+  margin: 0 0 16px 0;
+  background: linear-gradient(90deg, #fff 20%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.heroSubtitle {
+  max-width: 500px;
+  color: var(--text-secondary);
+  font-size: 1.15rem;
+  margin-bottom: 32px;
+  line-height: 1.6;
+}
+
+.addCourseWrapper {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.addBtn {
+  margin: 0;
+  padding: 11px 28px;
+  font-size: 1rem;
+}
+
+.robotWrapper {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.robotImg {
+  width: 320px;
+  height: 320px;
+  object-fit: cover;
+  border-radius: 32px;
+  box-shadow: 0 10px 50px rgba(57, 255, 20, 0.2);
+  border: 1px solid rgba(57, 255, 20, 0.3);
+}
+
+.pageBottom {
+  padding: 0 0 60px;
+}
+
+.emptyState {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px 0;
+  color: var(--text-secondary);
+}
+
+.emptyTitle {
+  font-size: 1.5rem;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 40px;
+}
+
+@media (max-width: 768px) {
+  .heroContainer {
+    flex-direction: column-reverse;
+    text-align: center;
+    margin: 40px 0 60px;
+    gap: 30px;
+  }
+  
+  .heroTextWrapper {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .heroTitle {
+    font-size: 2.4rem;
+  }
+  
+  .addCourseWrapper {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .robotWrapper {
+    justify-content: center;
+  }
+  
+  .robotImg {
+    width: 240px;
+    height: 240px;
+  }
+}

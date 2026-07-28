@@ -2,6 +2,9 @@
 
 An AI-powered learning platform designed for university and college students. Manage courses, generate intelligent study plans, summarize notes, and interactively question your study material using cutting-edge Generative AI.
 
+## About This Project
+This project was developed as part of an initiative at **Netsol** to demonstrate the practical application of Generative AI in modern full-stack web development. The goal was to build a robust, end-to-end application that solves real-world productivity challenges for students by combining strict data validation, seamless UI/UX, and intelligent AI agents.
+
 ## Features
 
 - **Course Management:** Add courses, define topics, and track study deadlines.

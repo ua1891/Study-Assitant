@@ -15,6 +15,11 @@ router = APIRouter(prefix="/agent", tags=["Agent"])
 
 @router.post("/summarize", response_model=NotesSummary)
 def summarize_note(note: NotesInput):
+    if len(note.text.strip()) < 10:
+        raise HTTPException(
+            status_code=400,
+            detail="Your note is too short to summarize. Please write at least a couple of sentences."
+        )
     try:
         result = Summarize_Notes.run_sync(note.text)
         return result.output

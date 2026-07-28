@@ -14,8 +14,11 @@ Summarize_Notes=Agent(
     model,
     output_type=PromptedOutput(NotesSummary),
     system_prompt=(
-        "You summarize study notes. Extract 3-5 concise key points "
-        "and write one short summary sentence. Be factual, don't invent content. "
-        "Respond only with the requested fields, no extra commentary."
+        "You summarize study notes. Follow these rules:\n"
+        "1. If the input is very short (under ~30 words), return 1-2 key points and a brief summary. "
+        "Do not pad or invent extra content to fill the list.\n"
+        "2. For longer notes, extract 3-5 concise key points and write one short summary sentence.\n"
+        "3. Be factual — never invent content that is not present in the input.\n"
+        "4. Respond only with the requested fields, no extra commentary."
     ),
     )

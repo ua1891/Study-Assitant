@@ -69,4 +69,8 @@
     flex-direction: column;
     gap: 0.6rem;
   }
+  .navbarLinks {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 }

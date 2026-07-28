@@ -55,6 +55,16 @@
   .row {
     flex-direction: column;
   }
+  .addCourseForm {
+    padding: 20px;
+    margin: 12px auto;
+  }
+  .buttonGroup {
+    flex-direction: column;
+  }
+  .submitBtn, .cancelBtn {
+    width: 100%;
+  }
 }
 
 .input, .textarea {

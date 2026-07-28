@@ -383,3 +383,9 @@
 .btnDeleteNote:hover {
   background: var(--rose-glow);
 }
+
+@media (max-width: 640px) {
+  .card, .askCard {
+    padding: 20px;
+  }
+}

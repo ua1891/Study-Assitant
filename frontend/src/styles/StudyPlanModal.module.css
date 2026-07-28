@@ -130,3 +130,12 @@
   color: var(--text-secondary);
   line-height: 1.5;
 }
+
+@media (max-width: 640px) {
+  .content {
+    padding: 16px;
+  }
+  .sessionCard {
+    padding: 12px;
+  }
+}
